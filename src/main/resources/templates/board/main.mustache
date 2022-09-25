@@ -1,0 +1,28 @@
+{{>layouts/head}}
+
+    <table class="table table-striped text-center">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {{#boards}}
+        <tr>
+            <td>{{number}}</td>
+            <td>{{writer}}</td>
+            <td><a href="">{{title}}</a></td>
+            <td>{{view}}</td>
+            <td>{{createAt}}</td>
+        </tr>
+        {{/boards}}
+        </tbody>
+    </table>
+
+    <a href="/board/new">글쓰기</a>
+{{>layouts/footer}}
