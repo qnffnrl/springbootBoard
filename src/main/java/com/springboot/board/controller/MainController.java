@@ -1,16 +1,19 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
+import com.springboot.board.data.dto.BoardsListResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -52,6 +55,17 @@ public class MainController {
         return "redirect:/board/main";
 
     }
+
+    @GetMapping("/board/content/{number}")
+    public String contentView(@PathVariable Long number, Model model) {
+
+        Optional<Board> dto = boardService.findById(number);
+        model.addAttribute("board", dto);
+
+        return "/board/contentView";
+
+    }
+
 
 }
 

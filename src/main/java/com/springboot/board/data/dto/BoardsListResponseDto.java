@@ -24,4 +24,7 @@ public class BoardsListResponseDto {
         this.view = board.getView();
         this.createAt = board.getCreateAt();
     }
+
+
+
 }
