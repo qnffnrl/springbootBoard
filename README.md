@@ -16,3 +16,4 @@ Springboot를 활용 게시판 제작
 ### Controller, Service, Repository, Entity(Domain)
 ![화면 캡처 2022-09-26 210026](https://user-images.githubusercontent.com/71891870/192283019-aeb5a466-a65a-4b99-8ac5-e46b2cf6fd6d.png)
 * https://velog.io/@seungho1216/Spring-BootController-Service-Repository%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC
+* https://azderica.github.io/00-java-repositorys/
