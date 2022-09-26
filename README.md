@@ -3,7 +3,7 @@
 Springboot를 활용 게시판 제작
 
 ## 게시판 게시글 데이터베이스 설계 (v1)
-![게시판DB](https://user-images.githubusercontent.com/71891870/192281180-a19955d0-eeb7-48da-937a-8e9bf470a7a8.png)
+![화면 캡처 2022-09-26 205356](https://user-images.githubusercontent.com/71891870/192281667-92061028-4c22-4be5-9412-dfc373958a61.png)
 
 ## 구현할 기능
 * 게시글 CRUD, 페이징
