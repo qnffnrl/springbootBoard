@@ -13,4 +13,5 @@ Springboot를 활용 게시판 제작
 * 추후 생각나는 대로 
 
 ## 이해안됬던것 참고 사이트
+### Controller, Service, Repository, Entity(Domain)
 * https://velog.io/@seungho1216/Spring-BootController-Service-Repository%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC
