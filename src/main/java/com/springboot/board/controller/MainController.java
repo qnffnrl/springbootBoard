@@ -1,7 +1,6 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
-import com.springboot.board.data.dto.BoardsListResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 @Controller
@@ -49,6 +47,7 @@ public class MainController {
         //임시
         board.setWriter("risker");
         board.setView(1L);
+        //  <-- !
 
         boardService.boardRegistration(board);
 
@@ -59,8 +58,16 @@ public class MainController {
     @GetMapping("/board/content/{number}")
     public String contentView(@PathVariable Long number, Model model) {
 
+        //흐름 이해할려고 코드 수 줄이지 않음
         Optional<Board> dto = boardService.findById(number);
+        /**
+         *  ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+         *  controller(현재 여기) - service - repository - entity(domain) 갖다옴
+         *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
+         */
+        System.out.println(dto.toString());
         model.addAttribute("board", dto);
+
 
         return "/board/contentView";
 

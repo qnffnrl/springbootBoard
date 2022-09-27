@@ -15,7 +15,6 @@ public class BoardsListResponseDto {
     private Long view;
     private LocalDateTime createAt;
 
-
     public BoardsListResponseDto(Board board) {
         this.number = board.getNumber();
         this.title = board.getTitle();
@@ -24,7 +23,4 @@ public class BoardsListResponseDto {
         this.view = board.getView();
         this.createAt = board.getCreateAt();
     }
-
-
-
 }

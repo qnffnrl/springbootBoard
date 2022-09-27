@@ -4,7 +4,6 @@ import com.springboot.board.data.entity.Board;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-import javax.persistence.Access;
 import java.util.List;
 import java.util.Optional;
 

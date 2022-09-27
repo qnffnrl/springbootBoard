@@ -23,9 +23,8 @@ public class BoardService {
     /**
      * 게시글 등록
      */
-    public long boardRegistration(Board board){
+    public void boardRegistration(Board board){
         boardRepository.save(board);
-        return board.getNumber();
 
     }
 
@@ -39,9 +38,14 @@ public class BoardService {
                 collect(Collectors.toList());
     }
 
+    /**
+     * 특정 게시글 조회 (1개)
+     */
+    @Transactional(readOnly = true)
     public Optional<Board> findById(Long number) {
 
         return boardRepository.findById(number);
+
 
     }
 }
