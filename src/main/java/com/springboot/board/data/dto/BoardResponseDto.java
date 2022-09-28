@@ -5,12 +5,12 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Getter
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class BoardsListResponseDto {
+@Builder
+public class BoardResponseDto {
 
     private Long number;
     private String title;
@@ -19,12 +19,4 @@ public class BoardsListResponseDto {
     private Long view;
     private LocalDateTime createAt;
 
-    public BoardsListResponseDto(Board board) {
-        this.number = board.getNumber();
-        this.title = board.getTitle();
-        this.content = board.getContent();
-        this.writer = board.getWriter();
-        this.view = board.getView();
-        this.createAt = board.getCreateAt();
-    }
 }

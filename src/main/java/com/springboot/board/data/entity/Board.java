@@ -21,14 +21,8 @@ public class Board {
 
     @Column(nullable = false)
     private String writer;
-
-    @Column(nullable = false)
     private String title;
-
-    @Column(nullable = false)
     private String content;
-
-    @Column(nullable = false)
     private Long view;
 
     private LocalDateTime createAt;

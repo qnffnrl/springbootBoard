@@ -1,10 +1,14 @@
 package com.springboot.board.service;
 
+import com.springboot.board.data.dto.BoardResponseDto;
 import com.springboot.board.data.dto.BoardsListResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.repository.BoardRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.ResourceAccessException;
 
 import java.util.List;
 import java.util.Optional;
@@ -41,10 +45,13 @@ public class BoardService {
     /**
      * 특정 게시글 조회 (1개)
      */
-    @Transactional(readOnly = true)
-    public Optional<Board> findById(Long number) {
+//    @Transactional(readOnly = true)
+    public ResponseEntity<Board> findById(Long number) {
 
-        return boardRepository.findById(number);
+        Board board = boardRepository.findById(number).orElseThrow(() -> new ResourceAccessException("Not exist"));
+
+        return ResponseEntity.ok(board);
+
 
 
     }

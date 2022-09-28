@@ -1,9 +1,12 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
+import com.springboot.board.data.dto.BoardResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -59,7 +62,9 @@ public class MainController {
     public String contentView(@PathVariable Long number, Model model) {
 
         //흐름 이해할려고 코드 수 줄이지 않음
-        Optional<Board> dto = boardService.findById(number);
+        ResponseEntity<Board> dto = boardService.findById(number);
+
+
         /**
          *  ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
          *  controller(현재 여기) - service - repository - entity(domain) 갖다옴
@@ -67,7 +72,6 @@ public class MainController {
          */
         System.out.println(dto.toString());
         model.addAttribute("board", dto);
-
 
         return "/board/contentView";
 
