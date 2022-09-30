@@ -1,20 +1,15 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
-import com.springboot.board.data.dto.BoardResponseDto;
+import com.springboot.board.data.dto.BoardUpdateRequestDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Controller
 public class MainController {
@@ -26,6 +21,10 @@ public class MainController {
         this.boardService = boardService;
     }
 
+    /**
+     * 메인 페이지
+     * 전체 게시글 출력
+     */
     @GetMapping("board/main")
     public String getMain(Model model){
 //        List<Board> boards = boardService.findBoards();
@@ -34,11 +33,17 @@ public class MainController {
         return "board/main";
     }
 
+    /**
+     * 글 작성 페이지로 이동
+     */
     @GetMapping("board/new")
     public String createContent() {
         return "board/createContentForm";
     }
 
+    /**
+     *  글 작성 insert (DB 적용)
+     */
     @PostMapping("/board/new")
     public String create(BoardDto boardDto){
 
@@ -58,25 +63,44 @@ public class MainController {
 
     }
 
+    /**
+     *  게시글 상세 페이지로 이동 (제목 클릭 시)
+     */
     @GetMapping("/board/content/{number}")
     public String contentView(@PathVariable Long number, Model model) {
 
         //흐름 이해할려고 코드 수 줄이지 않음
-        ResponseEntity<Board> dto = boardService.findById(number);
 
-
+//        BoardResponseDto dto = boardService.findById(number);
         /**
          *  ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
          *  controller(현재 여기) - service - repository - entity(domain) 갖다옴
          *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
          */
-        System.out.println(dto.toString());
-        model.addAttribute("board", dto);
+//        System.out.println("======= DTO : " + dto.toString());
+        model.addAttribute("board", boardService.findById(number));
 
         return "/board/contentView";
 
     }
 
+    /**
+     * 게시글 상세 페이지에서
+     * 수정 폼으로 변환
+     */
+    @GetMapping("/board/updateForm/{number}")
+    public String updateForm(@PathVariable Long number, Model model){
+        model.addAttribute("board", boardService.findById(number));
+
+        return "/board/updateForm";
+    }
+
+    @PutMapping("/board/update/{number}")
+    public Long updateComplete(@PathVariable Long number, @RequestBody BoardUpdateRequestDto requestDto){
+        System.out.println("In PutMaaing");
+        return boardService.update(number, requestDto);
+
+    }
 
 }
 

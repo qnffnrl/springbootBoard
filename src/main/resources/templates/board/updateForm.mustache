@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<form action="/board/update/{{number}}" method="post">
+    {{#board}}<br><br>
+        번호 : {{number}}<br>
+        작성자 : {{writer}}<br>
+        제목 : <input type="text" value="{{title}}" name="updatedTitle"><br>
+        내용 : <input type="text" value="{{content}}" name="updatedContent"><br>
+        조회수 : {{view}}<br>
+    {{/board}}
+    <input type="submit" value="수정완료">
+</form>
+</body>
+</html>

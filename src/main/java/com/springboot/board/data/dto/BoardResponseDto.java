@@ -5,11 +5,7 @@ import lombok.*;
 
 import java.time.LocalDateTime;
 
-@Data
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
-@Builder
+@Getter
 public class BoardResponseDto {
 
     private Long number;
@@ -19,4 +15,12 @@ public class BoardResponseDto {
     private Long view;
     private LocalDateTime createAt;
 
+    public BoardResponseDto(Board board) {
+        this.number = board.getNumber();
+        this.title = board.getTitle();
+        this.content = board.getContent();
+        this.writer = board.getWriter();
+        this.view = board.getView();
+        this.createAt = board.getCreateAt();
+    }
 }
