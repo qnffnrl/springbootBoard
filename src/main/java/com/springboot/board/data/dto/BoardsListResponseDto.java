@@ -17,7 +17,7 @@ public class BoardsListResponseDto {
     private String content;
     private String writer;
     private Long view;
-    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 
     public BoardsListResponseDto(Board board) {
         this.number = board.getNumber();
@@ -25,6 +25,6 @@ public class BoardsListResponseDto {
         this.content = board.getContent();
         this.writer = board.getWriter();
         this.view = board.getView();
-        this.createAt = board.getCreateAt();
+        this.updateAt = board.getUpdateAt();
     }
 }

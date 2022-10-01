@@ -25,5 +25,5 @@ public class Board {
     private String content;
     private Long view;
 
-    private LocalDateTime createAt;
+    private LocalDateTime updateAt;
 }

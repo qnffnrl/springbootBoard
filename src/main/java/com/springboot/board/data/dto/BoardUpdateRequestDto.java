@@ -3,6 +3,8 @@ package com.springboot.board.data.dto;
 
 import lombok.*;
 
+import java.time.LocalDateTime;
+
 @Data
 @Setter
 @Getter

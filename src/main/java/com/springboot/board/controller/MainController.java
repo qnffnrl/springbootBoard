@@ -50,7 +50,7 @@ public class MainController {
         Board board = new Board();
         board.setTitle(boardDto.getTitle());
         board.setContent(boardDto.getContent());
-        board.setCreateAt(LocalDateTime.now());
+        board.setUpdateAt(LocalDateTime.now());
 
         //임시
         board.setWriter("risker");
@@ -99,6 +99,7 @@ public class MainController {
 
         boardTmp.setTitle(boardUpdateRequestDto.getTitle());
         boardTmp.setContent(boardUpdateRequestDto.getContent());
+        boardTmp.setUpdateAt(LocalDateTime.now());
 
         boardService.boardRegistration(boardTmp);
 
