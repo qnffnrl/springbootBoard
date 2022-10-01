@@ -69,9 +69,6 @@ public class MainController {
     @GetMapping("/board/content/{number}")
     public String contentView(@PathVariable Long number, Model model) {
 
-        //흐름 이해할려고 코드 수 줄이지 않음
-
-//        BoardResponseDto dto = boardService.findById(number);
         /**
          *  ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
          *  controller(현재 여기) - service - repository - entity(domain) 갖다옴

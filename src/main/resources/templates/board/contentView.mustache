@@ -8,16 +8,14 @@
     <title>Document</title>
 </head>
 <body>
-    {{#board}}
 
     <br><br>
     번호 : {{number}}<br>
-    작성자 : {{writer}}<br>
-    제목 : {{title}}<br>
-    내용 : {{content}}<br>
-    조회수 : {{view}}<br>
+    작성자 : {{board.writer}}<br>
+    제목 : {{board.title}}<br>
+    내용 : {{board.content}}<br>
+    조회수 : {{board.view}}<br>
 
-    {{/board}}
     <button onclick="location.href='/board/updateForm/{{number}}'">수정</button>
 </body>
 </html>
