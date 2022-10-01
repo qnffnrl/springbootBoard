@@ -13,7 +13,4 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     @Query("SELECT b FROM Board as b ORDER BY b.number DESC")
     List<Board> findAll();
 
-//    @Query("SELECT b FROM Board as b WHERE b.number = ?1")
-//    Optional<Board> findById(Long number);
-
 }

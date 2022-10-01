@@ -22,6 +22,7 @@ public class BoardService {
 
     /**
      * 게시글 등록
+     * 게시글 수정할 때도 사용
      */
     public void boardRegistration(Board board){
         boardRepository.save(board);
@@ -47,25 +48,5 @@ public class BoardService {
         return boardRepository.findById(number).get();
 
     }
-
-    /**
-     * 게시글 수정
-     */
-    @Transactional
-    public Long update(Long number, BoardUpdateRequestDto requestDto){
-
-        Board board = boardRepository.findById(number).orElseThrow(() ->
-                new IllegalArgumentException("No Exist!!"));
-
-        /**
-         * JPA의 영속성 컨텍스트 덕분에 entity 객체의 값만 변경하면 자동으로 DB에 반영된다
-         * -> repository.update를 쓰지 않아도 됨
-         */
-
-        board.update(requestDto.getTitle(), requestDto.getContent());
-
-        return number;
-    }
-
 
 }

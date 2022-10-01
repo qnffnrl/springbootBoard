@@ -86,16 +86,23 @@ public class MainController {
      * 수정 폼으로 변환
      */
     @GetMapping("/board/updateForm/{number}")
-    public String updateForm(@PathVariable Long number, Model model){
+    public String updateForm(@PathVariable("number") Long number, Model model){
         model.addAttribute("board", boardService.findById(number));
 
         return "/board/updateForm";
     }
 
-    @PutMapping("/board/update/{number}")
-    public Long updateComplete(@PathVariable Long number, @RequestBody BoardUpdateRequestDto requestDto){
-        System.out.println("In PutMaaing");
-        return boardService.update(number, requestDto);
+    @PostMapping("/board/update/{number}")
+    public String updateComplete(@PathVariable Long number, BoardUpdateRequestDto boardUpdateRequestDto){
+
+        Board boardTmp = boardService.findById(number);
+
+        boardTmp.setTitle(boardUpdateRequestDto.getTitle());
+        boardTmp.setContent(boardUpdateRequestDto.getContent());
+
+        boardService.boardRegistration(boardTmp);
+
+        return "redirect:/board/content/" + number;
 
     }
 

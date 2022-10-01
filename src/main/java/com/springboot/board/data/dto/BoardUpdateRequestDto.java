@@ -1,20 +1,17 @@
 package com.springboot.board.data.dto;
 
 
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
+@Data
+@Setter
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
+@ToString
+@Builder
 public class BoardUpdateRequestDto {
 
     private String title;
     private String content;
-
-    @Builder
-    public BoardUpdateRequestDto(String title, String content) {
-        this.title = title;
-        this.content = content;
-    }
 }
