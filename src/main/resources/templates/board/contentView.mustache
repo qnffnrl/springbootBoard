@@ -16,7 +16,14 @@
     내용 : {{board.content}}<br>
     조회수 : {{board.view}}<br>
 
+
+    <form>
+        <input type="hidden" id="number" value="{{number}}">
+    </form>
+
     <button onclick="location.href='/board/updateForm/{{number}}'">수정</button>
+    <button id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
+
     <button onclick="location.href='/board/main'">돌아가기</button>
 </body>
 </html>

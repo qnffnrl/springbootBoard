@@ -49,4 +49,11 @@ public class BoardService {
 
     }
 
+    /**
+     * 게시글 삭제
+     */
+    public void boardDelete(Long number){
+        boardRepository.deleteById(number);
+    }
+
 }
