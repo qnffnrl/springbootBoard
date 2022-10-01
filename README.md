@@ -1,5 +1,4 @@
-# Build/Deploy to -> http://www.risker.shop:8080/board/main
-
+## Build/Deploy to -> http://www.risker.shop:8080/board/main
 # springbootBoard
 ## Toy 1
 Springboot를 활용 게시판 제작
