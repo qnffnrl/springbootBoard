@@ -2,15 +2,21 @@ package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
 import com.springboot.board.data.dto.BoardUpdateRequestDto;
+import com.springboot.board.data.dto.BoardsListResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class MainController {
@@ -25,11 +31,21 @@ public class MainController {
     /**
      * 메인 페이지
      * 전체 게시글 출력
+     * 페이징
+     * @PageAbleDefault(size = 10(디폴트), sort = 정렬 기준 필드(변수), direction = ASC/DESC, Pageable pageable = PageableDefault 값을 갖고 있는 변수 선언)
      */
     @GetMapping("board/main")
-    public String getMain(Model model){
-//        List<Board> boards = boardService.findBoards();
-        model.addAttribute("boards", boardService.findBoards());
+    public String getMain(Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable){
+        List<BoardsListResponseDto> boards = boardService.findBoards(pageable);
+
+        model.addAttribute("boards", boards);
+
+        List<Integer> pageNumbers = new ArrayList<Integer>();
+
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", boards.listIterator().hasNext());
+        model.addAttribute("hasPrev", boards.listIterator().hasPrevious());
 
         return "board/main";
     }

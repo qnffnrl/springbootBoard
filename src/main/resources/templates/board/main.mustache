@@ -1,28 +1,41 @@
 {{>layouts/head}}
 
-    <table class="table table-striped text-center">
-        <thead>
-        <tr>
-            <th>번호</th>
-            <th>작성자</th>
-            <th>제목</th>
-            <th>조회수</th>
-            <th>날짜</th>
-        </tr>
-        </thead>
+    <div class="d-flex justify-content-center m-4">
+        <table class="table table-striped text-center p-5">
+            <thead>
+            <tr>
+                <th>번호</th>
+                <th>작성자</th>
+                <th>제목</th>
+                <th>조회수</th>
+                <th>날짜</th>
+            </tr>
+            </thead>
 
-        <tbody>
-        {{#boards}}
-        <tr>
-            <td>{{number}}</td>
-            <td>{{writer}}</td>
-            <td><a href="/board/content/{{number}}">{{title}}</a></td>
-            <td>{{view}}</td>
-            <td>{{updateAt}}</td>
-        </tr>
-        {{/boards}}
-        </tbody>
-    </table>
-
+            <tbody>
+            {{#boards}}
+            <tr>
+                <td>{{number}}</td>
+                <td>{{writer}}</td>
+                <td><a href="/board/content/{{number}}">{{title}}</a></td>
+                <td>{{view}}</td>
+                <td>{{updateAt}}</td>
+            </tr>
+            {{/boards}}
+            </tbody>
+        </table>
+    </div>
     <a href="/board/new">글쓰기</a>
+    <!--  paging  -->
+    <div class="w-100 d-flex justify-content-center">
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item"><a class="page-link" href="/board/main?page={{previous}}">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="/board/main?page={{next}}">Next</a></li>
+            </ul>
+        </nav>
+    </div>
 {{>layouts/footer}}
