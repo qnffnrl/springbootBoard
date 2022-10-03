@@ -19,7 +19,7 @@ Springboot를 활용 게시판 제작
 * https://velog.io/@seungho1216/Spring-BootController-Service-Repository%EC%97%90-%EB%8C%80%ED%95%98%EC%97%AC
 * https://azderica.github.io/00-java-repositorys/
 
-## TroubleShooting 
+## TroubleShooting 회고
 ### (게시글 상세 페이지)
 * 특정 게시글을 불러오는 기능에서 JPARepository의 findById()를 사용하는데 해당 함수 반환값이 Optional임
 * -> (해결) 이 optional의 반환값을 사용하려면 뒤에 .get()을 붙여줘야한다고 함 (이것 때문에 엄청 고생함)
