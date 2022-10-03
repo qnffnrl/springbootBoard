@@ -30,11 +30,24 @@
     <div class="w-100 d-flex justify-content-center">
         <nav aria-label="Page navigation example">
             <ul class="pagination">
-                <li class="page-item"><a class="page-link" href="/board/main?page={{previous}}">Previous</a></li>
-                <li class="page-item"><a class="page-link" href="#">1</a></li>
-                <li class="page-item"><a class="page-link" href="#">2</a></li>
-                <li class="page-item"><a class="page-link" href="#">3</a></li>
-                <li class="page-item"><a class="page-link" href="/board/main?page={{next}}">Next</a></li>
+                <!--if(hasPrev.exist)-->
+                {{#hasPrev}}
+                    <li class="page-item"><a class="page-link" href="/board/main?page={{previous}}">Previous</a></li>
+                {{/hasPrev}}
+                {{^hasPrev}}
+                    <li class="page-item"><a class="page-link disabled" href="/board/main?page={{previous}}">Previous</a></li>
+                {{/hasPrev}}
+
+
+<!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+
+                <!--if(hasNext.exist)-->
+                {{#hasNext}}
+                    <li class="page-item"><a class="page-link" href="/board/main?page={{next}}">Next</a></li>
+                {{/hasNext}}
+                {{^hasNext}}
+                    <li class="page-item disabled"><a class="page-link" href="/board/main?page={{next}}">Next</a></li>
+                {{/hasNext}}
             </ul>
         </nav>
     </div>

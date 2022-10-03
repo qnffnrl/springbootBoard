@@ -7,6 +7,7 @@ import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -36,16 +37,22 @@ public class MainController {
      */
     @GetMapping("board/main")
     public String getMain(Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable){
-        List<BoardsListResponseDto> boards = boardService.findBoards(pageable);
+        Page<Board> boards = boardService.findBoards(pageable);
 
         model.addAttribute("boards", boards);
 
-        List<Integer> pageNumbers = new ArrayList<Integer>();
+//        int nowPage = boards.getPageable().getPageNumber() + 1;
+//        int startPage = Math.max(nowPage - 4, 1);
+//        int endPage = Math.min(nowPage + 5, boards.getTotalPages());
+//
+//        model.addAttribute("nowPage", nowPage);
+//        model.addAttribute("startPage", startPage);
+//        model.addAttribute("endPage", endPage);
 
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("hasNext", boards.listIterator().hasNext());
-        model.addAttribute("hasPrev", boards.listIterator().hasPrevious());
+        model.addAttribute("hasNext", boards.hasNext());
+        model.addAttribute("hasPrev", boards.hasPrevious());
 
         return "board/main";
     }
@@ -91,7 +98,6 @@ public class MainController {
          *  controller(현재 여기) - service - repository - entity(domain) 갖다옴
          *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
          */
-//        System.out.println("======= DTO : " + dto.toString());
         model.addAttribute("board", boardService.findById(number));
 
         return "/board/contentView";
