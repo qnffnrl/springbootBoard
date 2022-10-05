@@ -33,3 +33,9 @@ Springboot를 활용 게시판 제작
 * 블록 숫자 버튼구현 할려고 하는데 (숫자 버튼 클릭하면 해당 페이지로 이동) mustache에서는 로직을 짤 수가 없어 보류
 * JPARepository에서 지원하는 pageable 덕분에 전체 글 수, 블록 수 등 페이지 관련 정보는 있는데 이걸 활용해 view(/board/main)에서 로직을 짤수가 없음
 * -> MVC 패턴의 역할 분리를 확실히 할 순있지만 페이징 기능을 위해서 추후 thymeleaf로 변경해야 될듯 (thymeleaf문법으로 view에서 로직을 짤 수 있음)
+### (Spring Security 로그인 기능 구현 중)
+* Spring Security를 활용해서 로그인 기능을 구현하고 있는데 BCryptPasswordEncoder가 Bean으로 등록되지 않았다는 에러가 뜸
+* Consider defining a bean of type 'org.springframework.security.crypto.password.PasswordEncoder' in your configuration.
+* 방법은 SecurityConfig 클래스에 BCryptPasswordEncoder 메서드에 @Bean 어노테이션을 추가 하면 된다는 난 이미 되어있다
+* 혹시 몰라 메인메서드에 BCryptPasswordEncoder 메서드를 추가하고 @Bean을 했는데 에러가 없어지긴 했는데 구글링해본바로는 이건 다른 케이스고 내코드 같은 경우는 config 파일에 @Bean이 되어있으면 오류가 안나는게 정상인것 같다 (뭔가 이상함)
+* 계속 원인 찾는중...
