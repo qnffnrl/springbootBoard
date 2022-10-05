@@ -8,9 +8,4 @@ import java.util.List;
 
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-//    Board save(Board board);
-//
-//    @Query("SELECT b FROM Board as b ORDER BY b.number DESC")
-//    List<Board> findAll();
-
 }

@@ -1,16 +1,11 @@
 package com.springboot.board.service;
 
-import com.springboot.board.data.dto.BoardUpdateRequestDto;
-import com.springboot.board.data.dto.BoardsListResponseDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.repository.BoardRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class BoardService {
@@ -36,9 +31,6 @@ public class BoardService {
      */
     @Transactional(readOnly = true)
     public Page<Board> findBoards(Pageable pageable) {
-//        return boardRepository.findAll(pageable).
-//                stream().map(BoardsListResponseDto::new).
-//                collect(Collectors.toList());
         return boardRepository.findAll(pageable);
     }
 
