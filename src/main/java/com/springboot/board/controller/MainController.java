@@ -2,8 +2,11 @@ package com.springboot.board.controller;
 
 import com.springboot.board.data.dto.BoardDto;
 import com.springboot.board.data.dto.BoardUpdateRequestDto;
+import com.springboot.board.data.dto.UserDto;
+import com.springboot.board.data.dto.UserSessionDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
+import com.springboot.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,16 +15,23 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
 
 @Controller
 public class MainController {
 
+    private final HttpSession session;
     private final BoardService boardService;
+    private final UserService userService;
+
 
     @Autowired
-    public MainController(BoardService boardService) {
+    public MainController(HttpSession session, BoardService boardService, UserService userService) {
+        this.session = session;
         this.boardService = boardService;
+        this.userService = userService;
     }
 
     /**
@@ -134,6 +144,32 @@ public class MainController {
         boardService.boardDelete(number);
 
         return "redirect:/board/main";
+    }
+
+
+    /**
+     * 로그인
+     */
+    @GetMapping("/auth/join")
+    public String join(){
+        return "user/user-join";
+    }
+
+    @PostMapping("auth/joinProc")
+    public String joinProc(UserDto userDto) {
+        userService.join(userDto);
+
+        return "redirect:/auth/login";
+    }
+
+    @GetMapping("/auth/login")
+    public String login(Model model){
+
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+        return "/user/user-login";
     }
 
 }
