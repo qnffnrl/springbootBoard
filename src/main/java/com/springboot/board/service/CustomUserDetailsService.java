@@ -16,11 +16,10 @@ import javax.servlet.http.HttpSession;
 public class CustomUserDetailsService implements UserDetailsService {
 
     private final UserRepository userRepository;
-
     private final HttpSession session;
 
     /**
-     *  username이 DB에 있는지 확인 
+     *  username 이 DB에 있는지 확인
      */
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException{
@@ -30,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         session.setAttribute("user", new UserSessionDto(user));
 
         /**
-         * 사큐리티 새션에 유저 정보 저장
+         * 시큐리티 세션에 유저 정보 저장
          */
         return new CustomUserDetails(user);
     }

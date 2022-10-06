@@ -59,6 +59,11 @@ public class MainController {
         model.addAttribute("hasNext", boards.hasNext());
         model.addAttribute("hasPrev", boards.hasPrevious());
 
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
         return "board/main";
     }
 
@@ -152,10 +157,10 @@ public class MainController {
      */
     @GetMapping("/auth/join")
     public String join(){
-        return "user/user-join";
+        return "/user/user-join";
     }
 
-    @PostMapping("auth/joinProc")
+    @PostMapping("/auth/joinProc")
     public String joinProc(UserDto userDto) {
         userService.join(userDto);
 
@@ -165,6 +170,7 @@ public class MainController {
     @GetMapping("/auth/login")
     public String login(Model model){
 
+        // 세션에 user 라는 attribute 값을 만듦 (로그인 체크 시 활용) 
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());

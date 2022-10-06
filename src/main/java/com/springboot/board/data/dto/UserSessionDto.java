@@ -1,3 +1,7 @@
+/**
+ * 인증된 사용자 정보를 세션에 저장하기 위한 클래스
+ */
+
 package com.springboot.board.data.dto;
 
 import com.springboot.board.data.entity.Role;

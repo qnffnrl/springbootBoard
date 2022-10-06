@@ -14,19 +14,14 @@ import lombok.NoArgsConstructor;
 public class UserDto {
 
     private String username;
-
     private String password;
-
     private String nickname;
-
     private String email;
-
     private Role role;
 
     /**
      * DTO -> Entity
      */
-
     public User toEntity(){
         User user = User.builder()
                 .username(username)
