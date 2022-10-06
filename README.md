@@ -39,3 +39,7 @@ Springboot를 활용 게시판 제작
 * 방법은 SecurityConfig 클래스에 BCryptPasswordEncoder 메서드에 @Bean 어노테이션을 추가 하면 된다는 난 이미 되어있다
 * 혹시 몰라 메인메서드에 BCryptPasswordEncoder 메서드를 추가하고 @Bean을 했는데 에러가 없어지긴 했는데 구글링해본바로는 이건 다른 케이스고 내코드 같은 경우는 config 파일에 @Bean이 되어있으면 오류가 안나는게 정상인것 같다 (뭔가 이상함)
 * 계속 원인 찾는중...
+* 해결 -> Spring Security 클래스가 spring 패키지 밖에 있었음 ㅋㅋ, 패키지 안으로 옮기니깐 바로 실행됨
+* 구글링 하다가 spring이 특정 Bean을 못찾는다는 오류일 수가 있다해서 메인 클래스에 ComponentScan 경로를 직접 설정하는 어노테이션을 추가했는데, 경로를 추가하다가 문제의 config 파일이 있는 패키지가 자동완성이 안되는 걸 보고 발견함 
+* 정리 : 맨 처음 오류 확인했을때 메인메서드에 @Bean 추가해야 한다는 방법과 내 코드의 경우는 그와 다른 케이스라고 했는데 정리하자면
+* -> 내 프로젝트에서 Spring Security에 대한 설정을 configuration/SecurityConfig.class 파일에 따로 했는데 여기서 Bean 등록을 메인클래스에 해버리면 해당 config 파일을 무시하고 디폴트 설정으로 이뤄진 또다른 Spring Security를 사용한다는 소리이다 
