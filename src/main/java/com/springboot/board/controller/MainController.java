@@ -15,6 +15,7 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.w3c.dom.Node;
 
 import javax.servlet.http.HttpSession;
 import java.time.LocalDateTime;
@@ -71,7 +72,11 @@ public class MainController {
      * 글 작성 페이지로 이동
      */
     @GetMapping("board/new")
-    public String createContent() {
+    public String createContent(Model model) {
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
         return "board/createContentForm";
     }
 
@@ -79,7 +84,12 @@ public class MainController {
      *  글 작성 insert (DB 적용)
      */
     @PostMapping("/board/new")
-    public String create(BoardDto boardDto){
+    public String create(BoardDto boardDto, Model model){
+
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
 
         Board board = new Board();
         board.setTitle(boardDto.getTitle());
@@ -87,11 +97,12 @@ public class MainController {
         board.setUpdateAt(LocalDateTime.now());
 
         //임시
-        board.setWriter("risker");
+        board.setWriter(user.getNickname());
         board.setView(1L);
         //  <-- !
 
         boardService.boardRegistration(board);
+
 
         return "redirect:/board/main";
 
@@ -109,6 +120,10 @@ public class MainController {
          *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
          */
         model.addAttribute("board", boardService.findById(number));
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
 
         return "/board/contentView";
 
@@ -122,11 +137,16 @@ public class MainController {
     public String updateForm(@PathVariable("number") Long number, Model model){
         model.addAttribute("board", boardService.findById(number));
 
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
         return "/board/updateForm";
     }
 
     @PostMapping("/board/update/{number}")
-    public String updateComplete(@PathVariable Long number, BoardUpdateRequestDto boardUpdateRequestDto){
+    public String updateComplete(@PathVariable Long number, BoardUpdateRequestDto boardUpdateRequestDto, Model model){
 
         Board boardTmp = boardService.findById(number);
 
@@ -136,6 +156,11 @@ public class MainController {
 
         boardService.boardRegistration(boardTmp);
 
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
         return "redirect:/board/content/" + number;
 
     }
@@ -144,16 +169,21 @@ public class MainController {
      *  게시글 삭제
      */
     @GetMapping("/board/delete/{number}")
-    public String boardDelete(@PathVariable("number") Long number){
+    public String boardDelete(@PathVariable("number") Long number, Model model){
 
         boardService.boardDelete(number);
+
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
 
         return "redirect:/board/main";
     }
 
 
     /**
-     * 로그인
+     * 회원가입
      */
     @GetMapping("/auth/join")
     public String join(){
@@ -167,17 +197,13 @@ public class MainController {
         return "redirect:/auth/login";
     }
 
+    /**
+     *  로그인
+     */
     @GetMapping("/auth/login")
-    public String login(Model model){
-
-        // 세션에 user 라는 attribute 값을 만듦 (로그인 체크 시 활용) 
-        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user.getNickname());
-        }
+    public String login(){
         return "/user/user-login";
     }
-
 }
 
 

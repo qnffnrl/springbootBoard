@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                    .antMatchers("/auth/**")//해당 경로에 대해 인증없이 접근가능
+                    .antMatchers("/auth/**", "/board/main")//해당 경로에 대해 인증없이 접근가능
                     .permitAll() // 권한에 다른 접근을 설정함
                     .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
                 
@@ -76,7 +76,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
                 .formLogin()
                     .loginPage("/auth/login") // 기본 제공 Form 말고 커스텀 로그인 폼을 쓸때 사용
-                    .loginProcessingUrl("loginProc") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
+                    .loginProcessingUrl("/auth/loginProc") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
                     .defaultSuccessUrl("/board/main") // 로그인 성공 시 이동하는 페이지
 
                 .and()
@@ -87,6 +87,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * 기본적으로 WebSecurityConfigureAdapter 를 사용하면 자동으로 적용됨 
                  */
                 .logout()
+                    .logoutUrl("/auth/logout") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
                     .logoutSuccessUrl("/auth/login") // 로그아웃 시 이동되는 페이지
                     .invalidateHttpSession(true); // HTTP 세션을 초기화
     }
