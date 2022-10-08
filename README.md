@@ -59,3 +59,9 @@ Springboot를 활용 게시판 제작
 * 해결 -> 일단 로그인 프로세스 흐름을 잘못이해함 / 일단 로그인 시도 후 성공/실패 결과에 따라 이동되는 페이지를 controller에서 직접 쓰는게 아니라 Spring Security 설정에서 하는 거였음, 로그인 성공/실패를 따지는 로직은 Spring Security에 내장된 경로로 명시 (loginProcessingUrl(), logoutUrl() 등)
 * 처음 문제가 로그인 성공시 넘어가도록 설정한 페이지로 안넘어간다고 했는데 원인은 Spring Security에서 설정한 접근 허용한 경로가 /auth/** 인데 로그인 성공 유무 판단 로직 경로에서 앞에 /auth를 안붙임 그리고 세션을 설정하는 코드를 이동되는 페이지의 Controller 메서드에 안하고 로그인 페이지로 이동하는 메서드에 넣어놨었음 (2022.10.07)
 * 로그인 기능 구현 후, 글 작성 시 임시로 넣은 작성자 필드를 세션의 usernickname으로 변경
+
+### (Spring Security Login Failure Handler 기능 구현중)
+* 로그인 실패 시 실패 원인을 alert하며 로그인 페이지로 리다이렉트 하는 기능 구현중
+* Spring Security 설정 파일에서 failureHandler() 메서드를 활용하고 AuthenticationFailureHandler 인터페이스의 구현체인 SimpleUrlAuthenticationFailureHandler를 상속해서 구현중이다 (setDefaultFailureUrl()를 사용하기 위해)
+* 해당 구현체를 상속받는 로그인 실패 핸들러 클래스를 생성해서 예외처리를 하는데 onAuthenticationFailure()라는 메서드를 오버라이딩 한다
+* 그런데 @Override 어노테이션에서 오버라이딩할 메서드가 없다고 오류가 뜬다 -> SimpleUrlAuthenticationFailureHandler를 인식을 못하는거 같은데 뭔가 내가또 잘못한데 있는것 같다... 계속 원인 찾는중(2022.10.09)
