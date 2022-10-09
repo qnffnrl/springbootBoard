@@ -65,3 +65,7 @@ Springboot를 활용 게시판 제작
 * Spring Security 설정 파일에서 failureHandler() 메서드를 활용하고 AuthenticationFailureHandler 인터페이스의 구현체인 SimpleUrlAuthenticationFailureHandler를 상속해서 구현중이다 (setDefaultFailureUrl()를 사용하기 위해)
 * 해당 구현체를 상속받는 로그인 실패 핸들러 클래스를 생성해서 예외처리를 하는데 onAuthenticationFailure()라는 메서드를 오버라이딩 한다
 * 그런데 @Override 어노테이션에서 오버라이딩할 메서드가 없다고 오류가 뜬다 -> SimpleUrlAuthenticationFailureHandler를 인식을 못하는거 같은데 뭔가 내가또 잘못한데 있는것 같다... 계속 원인 찾는중(2022.10.09)
+* 해결 -> 라이브러리 임포트를 잘못했었다, AuthenticationException 메서드를 사용하려면 (import org.springframework.security.core.AuthenticationException)을 해야되는데 (import javax.naming.AuthenticationException)를 임포트 했던 것이었다
+* 인텔리제이의 자동완성을 적극 활용하다보니 이런 단점도 있는것 같다. 자동완성으로 임포트할 라이브러리를 선택할때 라이브러리 이름을 잘 봐야할것 같다
+* 두 라이브러리 이름이 똑같아서 원인을 찾기 힘들었던것 같다
+* 이번 오류는 뭔가 인텔리제이 오류나 공백 오류 같은 진짜 오류일 것 같았는데 아니었다... 역시 컴퓨터는 거짓말을 하지 
