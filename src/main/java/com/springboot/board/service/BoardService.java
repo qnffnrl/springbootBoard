@@ -59,6 +59,15 @@ public class BoardService {
         return boardRepository.updateView(number);
     }
 
+    /**
+     * 게시글 검색 기능
+     */
+    @Transactional
+    public Page<Board> search(String keyword, Pageable pageable) {
+        Page<Board> searchedList = boardRepository.findByTitleContaining(keyword, pageable);
+        return searchedList;
+    }
+
 }
 
 

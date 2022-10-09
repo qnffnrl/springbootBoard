@@ -42,9 +42,13 @@ public class MainController {
      * @PageAbleDefault(size = 10(디폴트), sort = 정렬 기준 필드(변수), direction = ASC/DESC, Pageable pageable = PageableDefault 값을 갖고 있는 변수 선언)
      */
     @GetMapping("board/main")
-    public String getMain(Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable){
+    public String getMain(@RequestParam(value = "error", required = false) String error,
+                          @RequestParam(value = "exception", required = false) String exception,
+                          Model model,
+                          @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable){
         Page<Board> boards = boardService.findBoards(pageable);
 
+//      게시글 뿌려주기
         model.addAttribute("boards", boards);
 
 //        int nowPage = boards.getPageable().getPageNumber() + 1;
@@ -55,6 +59,11 @@ public class MainController {
 //        model.addAttribute("startPage", startPage);
 //        model.addAttribute("endPage", endPage);
 
+//      로그인 실패 핸들러 정보
+        model.addAttribute("error", error);
+        model.addAttribute("exception", exception);
+
+//      페이징 버튼 정보
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", boards.hasNext());
@@ -71,7 +80,7 @@ public class MainController {
     /**
      * 글 작성 페이지로 이동
      */
-    @GetMapping("board/new")
+    @GetMapping("/board/new")
     public String createContent(Model model) {
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
         if (user != null) {
@@ -95,10 +104,9 @@ public class MainController {
         board.setTitle(boardDto.getTitle());
         board.setContent(boardDto.getContent());
         board.setUpdateAt(LocalDateTime.now());
-
         board.setWriter(user.getNickname());
-        boardService.boardRegistration(board);
 
+        boardService.boardRegistration(board);
 
         return "redirect:/board/main";
 
@@ -192,21 +200,31 @@ public class MainController {
     public String joinProc(UserDto userDto) {
         userService.join(userDto);
 
-        return "redirect:/auth/login";
+        return "redirect:/board/main";
     }
 
     /**
-     *  로그인
+     *  게시글 검색
      */
-    @GetMapping("/auth/login")
-    public String login(@RequestParam(value = "error", required = false) String error,
-                        @RequestParam(value = "exception", required = false) String exception,
-                        Model model){
+    @GetMapping("/board/search")
+    public String search(String keyword, Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> searchedList = boardService.search(keyword, pageable);
 
-        model.addAttribute("error", error);
-        model.addAttribute("exception", exception);
+        model.addAttribute("searchedList", searchedList);
+        model.addAttribute("keyword", keyword);
 
-        return "/user/user-login";
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", searchedList.hasNext());
+        model.addAttribute("hasPrev", searchedList.hasPrevious());
+
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
+        return "/board/search";
+
     }
 }
 

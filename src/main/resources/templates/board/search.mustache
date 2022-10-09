@@ -1,0 +1,54 @@
+{{>layouts/head}}
+
+<div class="d-flex justify-content-center m-4">
+    <table class="table table-striped text-center p-5">
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>작성자</th>
+            <th>제목</th>
+            <th>조회수</th>
+            <th>날짜</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {{#searchedList}}
+            <tr>
+                <td>{{number}}</td>
+                <td>{{writer}}</td>
+                <td><a href="/board/content/{{number}}">{{title}}</a></td>
+                <td>{{view}}</td>
+                <td>{{updateAt}}</td>
+            </tr>
+        {{/searchedList}}
+        </tbody>
+    </table>
+</div>
+<a href="/board/new">글쓰기</a>
+<!--  paging  -->
+<div class="w-100 d-flex justify-content-center">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <!--if(hasPrev.exist)-->
+            {{#hasPrev}}
+                <li class="page-item"><a class="page-link" href="/board/search?keyword={{keyword}}&page={{previous}}">Previous</a></li>
+            {{/hasPrev}}
+            {{^hasPrev}}
+                <li class="page-item"><a class="page-link disabled" href="/board/search?keyword={{keyword}}&page={{previous}}">Previous</a></li>
+            {{/hasPrev}}
+
+
+            <!--                <li class="page-item"><a class="page-link" href="#">1</a></li>-->
+
+            <!--if(hasNext.exist)-->
+            {{#hasNext}}
+                <li class="page-item"><a class="page-link" href="/board/search?keyword={{keyword}}&page={{next}}">Next</a></li>
+            {{/hasNext}}
+            {{^hasNext}}
+                <li class="page-item disabled"><a class="page-link" href="/board/search?keyword={{keyword}}&page={{next}}">Next</a></li>
+            {{/hasNext}}
+        </ul>
+    </nav>
+</div>
+{{>layouts/footer}}

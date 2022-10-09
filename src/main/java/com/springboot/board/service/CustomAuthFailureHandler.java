@@ -35,7 +35,7 @@ public class CustomAuthFailureHandler extends SimpleUrlAuthenticationFailureHand
             errorMessage = "Login Failure, Cause Unknown Error";
         }
         errorMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
-        setDefaultFailureUrl("/auth/login?error=true&exception=" + errorMessage);
+        setDefaultFailureUrl("/board/main?error=true&exception=" + errorMessage);
 
         super.onAuthenticationFailure(request, response, exception);
     }

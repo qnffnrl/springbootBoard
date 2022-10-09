@@ -64,7 +64,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                    .antMatchers("/auth/**", "/board/main", "/board/content/**", "/confirm/**")//해당 경로에 대해 인증없이 접근가능
+                    .antMatchers("/auth/**", "/board/main", "/board/content/**","/board/search" , "/confirm/**")//해당 경로에 대해 인증없이 접근가능
                     .permitAll() // 권한에 다른 접근을 설정함
                     .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
                 
@@ -89,7 +89,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
                 .logout()
                     .logoutUrl("/auth/logout") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
-                    .logoutSuccessUrl("/auth/login") // 로그아웃 시 이동되는 페이지
+                    .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지
                     .invalidateHttpSession(true); // HTTP 세션을 초기화
     }
 }

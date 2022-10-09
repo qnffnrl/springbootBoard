@@ -30,30 +30,39 @@
                     <span class="mx-3">{{user}}님 안녕하세요!</span>
                     <a href="/auth/logout" class="btn btn-outline-dark">로그아웃</a>
                 {{/user}}
-                {{^user}}
-                    <a href="/auth/login" role="button" class="btn btn-outline-dark bi bi-person-circle"> 로그인</a>
-                    <a href="/auth/join" role="button" class="btn btn-outline-dark"> 회원가입</a>
-                {{/user}}
+                <!-- 로그인 안했을 시 -->
+
             </div>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    {{^user}}
+                        <form action="/auth/loginProc" method="post">
+                            <input type="text" name="username" placeholder="아이디">
+                            <input type="password" name="password" placeholder="비밀번호">
+                            <input type="submit" class="btn btn-primary bi bi-person m-1" value="로그인">
+                        </form>
+                        <button onclick="location.href='/auth/join'" class="text-white bg-secondary btn bi bi-person">회원가입</button>
+                    {{/user}}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Link</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link disabled">Disabled</a>
+                        <a class="nav-link active" aria-current="page" href="/board/main">Home</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+
+                <!-- 검색 폼 -->
+                <form class="d-flex" role="search" action="/board/search" method="get">
+                    <input name="keyword" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
+                <!-- << -->
+
             </div>
+
         </div>
+
     </nav>
+    <div>
+        {{#error}}
+            <p id="valid" class="alert alert-danger">{{exception}}</p>
+        {{/error}}
+    </div>
