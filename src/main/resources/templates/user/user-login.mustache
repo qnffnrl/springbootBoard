@@ -10,6 +10,13 @@
                 <label>비밀번호</label>
                 <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주세요">
             </div>
+
+            <span>
+                {{#error}}
+                    <p id="valid" class="alert alert-danger">{{exception}}</p>
+                {{/error}}
+            </span>
+
             <button class="btn btn-primary bi bi-person"> 로그인</button>
             <a href="/board/main" role="button" class="btn btn-info bi bi-arrow-return-left"> 목록</a>
         </form>
