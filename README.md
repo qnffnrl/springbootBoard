@@ -3,8 +3,8 @@
 ## Toy 1
 Springboot를 활용 게시판 제작
 
-## 게시판 게시글 데이터베이스 설계 (v1)
-![화면 캡처 2022-09-26 205356](https://user-images.githubusercontent.com/71891870/192281667-92061028-4c22-4be5-9412-dfc373958a61.png)
+## 게시판 게시글 데이터베이스 설계 (v2)
+![화면 캡처 2022-10-09 171057](https://user-images.githubusercontent.com/71891870/194748276-895c3351-c1b1-440f-bbb7-0a51d6970cb5.png)
 
 ## 회원정보 데이터베이스 설계 (v1)
 ![화면 캡처 2022-10-08 234527](https://user-images.githubusercontent.com/71891870/194715915-67bf5b1f-4629-485a-822a-f36f65ddc0a4.png)
