@@ -23,7 +23,10 @@ public class Board {
     private String writer;
     private String title;
     private String content;
-    private Long view;
+
+    @Column(columnDefinition = "integer default 0", nullable = false)
+    private int view;
+
 
     private LocalDateTime updateAt;
 }

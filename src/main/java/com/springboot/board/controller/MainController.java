@@ -96,11 +96,7 @@ public class MainController {
         board.setContent(boardDto.getContent());
         board.setUpdateAt(LocalDateTime.now());
 
-        //임시
         board.setWriter(user.getNickname());
-        board.setView(1L);
-        //  <-- !
-
         boardService.boardRegistration(board);
 
 
@@ -119,7 +115,9 @@ public class MainController {
          *  controller(현재 여기) - service - repository - entity(domain) 갖다옴
          *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
          */
+
         model.addAttribute("board", boardService.findById(number));
+        boardService.updateView(number);
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());

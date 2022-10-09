@@ -51,6 +51,14 @@ public class BoardService {
         boardRepository.deleteById(number);
     }
 
+    /**
+     *  view count
+     */
+    @Transactional
+    public Integer updateView(Long number){
+        return boardRepository.updateView(number);
+    }
+
 }
 
 
