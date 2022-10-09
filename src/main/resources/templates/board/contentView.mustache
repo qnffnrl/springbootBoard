@@ -1,13 +1,4 @@
-<!doctype html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
+{{>layouts/head}}
 
     <br><br>
     번호 : {{number}}<br>
@@ -25,5 +16,5 @@
     <button id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
 
     <button onclick="location.href='/board/main'">돌아가기</button>
-</body>
-</html>
+
+{{>layouts/footer}}

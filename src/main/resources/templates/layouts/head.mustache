@@ -8,7 +8,18 @@
     <title>Springboot 게시판</title>
     <link rel="icon" href="../../static/img/favicon.ico">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+    <link href="//fonts.googleapis.com/css?family=Lobster&subset=latin,latin-ext" rel="stylesheet" type="text/css">
     <style>
+        #mainTitle {
+            text-align: center;
+            font-family : 'Lobster';
+            color: darkgreen;
+        }
+        #mainTitleText{
+            text-decoration: none;
+            color: green;
+            font-size: 70px;
+        }
         #page {
             width: 100%;
             margin: 0 auto;
@@ -23,6 +34,16 @@
 </head>
 <body>
 <div id="page">
+
+<!-- 페이지 로고 Banner -->
+    <div class="w-100  d-flex justify-content-center">
+        <div id="mainTitle" class="w-50">
+            <h1><em><a id="mainTitleText" href="/board/main">My First Springboot Board</a></em></h1>
+            <hr>
+            <h2><u>By risker</u></h2>
+        </div>
+    </div>
+<!--  <<  -->
     <nav class="navbar navbar-expand-lg bg-light" style="background-color: #e3f2fd;">
         <div class="container-fluid">
             <div class="text-right">
