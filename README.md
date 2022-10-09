@@ -68,4 +68,4 @@ Springboot를 활용 게시판 제작
 * 해결 -> 라이브러리 임포트를 잘못했었다, AuthenticationException 메서드를 사용하려면 (import org.springframework.security.core.AuthenticationException)을 해야되는데 (import javax.naming.AuthenticationException)를 임포트 했던 것이었다
 * 인텔리제이의 자동완성을 적극 활용하다보니 이런 단점도 있는것 같다. 자동완성으로 임포트할 라이브러리를 선택할때 라이브러리 이름을 잘 봐야할것 같다
 * 두 라이브러리 이름이 똑같아서 원인을 찾기 힘들었던것 같다
-* 이번 오류는 뭔가 인텔리제이 오류나 공백 오류 같은 진짜 오류일 것 같았는데 아니었다... 역시 컴퓨터는 거짓말을 하지 
+* 이번 오류는 뭔가 인텔리제이 오류나 공백 오류 같은 진짜 오류일 것 같았는데 아니었다... 역시 컴퓨터는 거짓말을 하지 않는다.
