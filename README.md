@@ -5,6 +5,7 @@ Springboot를 활용 게시판 제작
 
 ## 게시판 게시글 데이터베이스 설계 (v2)
 * view (BIGINT -> INT)
+
 ![화면 캡처 2022-10-09 171057](https://user-images.githubusercontent.com/71891870/194748276-895c3351-c1b1-440f-bbb7-0a51d6970cb5.png)
 
 ## 회원정보 데이터베이스 설계 (v1)
