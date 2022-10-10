@@ -218,6 +218,10 @@ public class MainController {
 
             return "/user/user-join";
         }
+        //중복검사
+        userService.checkUsernameDuplication(userDto);
+        userService.checkNicknameDuplication(userDto);
+        userService.checkEmailDuplication(userDto);
 
         userService.join(userDto);
         return "redirect:/board/main";
