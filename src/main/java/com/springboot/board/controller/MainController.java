@@ -8,7 +8,6 @@ import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import com.springboot.board.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.neo4j.Neo4jProperties;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -18,13 +17,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
-import org.w3c.dom.Node;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.Map;
 
 @Controller
 public class MainController {
@@ -203,9 +204,22 @@ public class MainController {
     }
 
     @PostMapping("/auth/joinProc")
-    public String joinProc(UserDto userDto) {
-        userService.join(userDto);
+    public String joinProc(@Valid UserDto userDto, Errors errors, Model model) {
 
+        if (errors.hasErrors()) {
+            //회원가입 실패 시 입력 값을 input 에 유지
+            model.addAttribute("userDto", userDto);
+
+            //유효성 통과 못한 필드/메시지 핸들링
+            Map<String, String> validatorResult = userService.validateHandling(errors);
+            for (String key : validatorResult.keySet()) {
+                model.addAttribute(key, validatorResult.get(key));
+            }
+
+            return "/user/user-join";
+        }
+
+        userService.join(userDto);
         return "redirect:/board/main";
     }
 
