@@ -41,33 +41,6 @@ public class UserService {
         }
         return validatorResult;
     }
-
-    /**
-     *  id, pw, nickname 중복 체크
-     */
-    @Transactional(readOnly = true)
-    public void checkUsernameDuplication(UserDto dto){
-        boolean usernameDuplicate = userRepository.existsByUsername(dto.toEntity().getUsername());
-        if (usernameDuplicate) {
-            throw new IllegalStateException("아이디가 이미 존재합니다.");
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public void checkNicknameDuplication(UserDto dto){
-        boolean nicknameDuplicate = userRepository.existsByNickname(dto.toEntity().getNickname());
-        if (nicknameDuplicate) {
-            throw new IllegalStateException("닉네임이 이미 존재합니다.");
-        }
-    }
-
-    @Transactional(readOnly = true)
-    public void checkEmailDuplication(UserDto dto) {
-        boolean emailDuplicate = userRepository.existsByEmail(dto.toEntity().getEmail());
-        if (emailDuplicate) {
-            throw new IllegalStateException("이메일이 이미 존재합니다.");
-        }
-    }
 }
 
 

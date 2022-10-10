@@ -7,6 +7,9 @@ import com.springboot.board.data.dto.UserSessionDto;
 import com.springboot.board.data.entity.Board;
 import com.springboot.board.service.BoardService;
 import com.springboot.board.service.UserService;
+import com.springboot.board.validator.CheckEmailValidator;
+import com.springboot.board.validator.CheckNicknameValidator;
+import com.springboot.board.validator.CheckUsernameValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +21,7 @@ import org.springframework.security.web.authentication.logout.SecurityContextLog
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +37,32 @@ public class MainController {
     private final HttpSession session;
     private final BoardService boardService;
     private final UserService userService;
+    private final CheckUsernameValidator checkUsernameValidator;
+    private final CheckNicknameValidator checkNicknameValidator;
+    private final CheckEmailValidator checkEmailValidator;
 
+    /**
+     * @InitBinder
+     * 특정 컨트롤러에서 바인딩 또는 검증 설정을 변경하고 싶을 때 사용
+     *
+     * @WebDataBinder
+     * HTTP 요청 정보를 컨트롤러 메소드의 파라미터나 모델에 바인딩할 때 사용
+     */
+    @InitBinder
+    public void validatorBinder(WebDataBinder binder) {
+        binder.addValidators(checkUsernameValidator);
+        binder.addValidators(checkNicknameValidator);
+        binder.addValidators(checkEmailValidator);
+    }
 
     @Autowired
-    public MainController(HttpSession session, BoardService boardService, UserService userService) {
+    public MainController(HttpSession session, BoardService boardService, UserService userService, CheckUsernameValidator checkUsernameValidator, CheckNicknameValidator checkNicknameValidator, CheckEmailValidator checkEmailValidator) {
         this.session = session;
         this.boardService = boardService;
         this.userService = userService;
+        this.checkUsernameValidator = checkUsernameValidator;
+        this.checkNicknameValidator = checkNicknameValidator;
+        this.checkEmailValidator = checkEmailValidator;
     }
 
     /**
@@ -218,11 +241,6 @@ public class MainController {
 
             return "/user/user-join";
         }
-        //중복검사
-        userService.checkUsernameDuplication(userDto);
-        userService.checkNicknameDuplication(userDto);
-        userService.checkEmailDuplication(userDto);
-
         userService.join(userDto);
         return "redirect:/board/main";
     }
