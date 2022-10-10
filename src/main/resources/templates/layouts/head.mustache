@@ -46,19 +46,21 @@
 <!--  <<  -->
     <nav class="navbar navbar-expand-lg bg-light" style="background-color: #e3f2fd;">
         <div class="container-fluid">
+            <!-- 로그인됬을 시 -->
             <div class="text-right">
                 {{#user}}
                     <span class="mx-3">{{user}}님 안녕하세요!</span>
                     <a href="/auth/logout" class="btn btn-outline-dark">로그아웃</a>
                 {{/user}}
-                <!-- 로그인 안했을 시 -->
-
             </div>
+            <!-- << -->
 
+            <!-- 로그인 안했을 시 -->
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {{^user}}
                         <form action="/auth/loginProc" method="post">
+                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
                             <input type="text" name="username" placeholder="아이디">
                             <input type="password" name="password" placeholder="비밀번호">
                             <input type="submit" class="btn btn-primary bi bi-person m-1" value="로그인">
@@ -69,6 +71,7 @@
                         <a class="nav-link active" aria-current="page" href="/board/main">Home</a>
                     </li>
                 </ul>
+                <!-- << -->
 
                 <!-- 검색 폼 -->
                 <form class="d-flex" role="search" action="/board/search" method="get">

@@ -56,15 +56,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 /**
-                 * Spring Security 는 CSRF 토근이 없으면 해당 요청을 막아서 잠시 비활성화
+                 * Spring Security CSRF 설정
+                 * Spring Security 는 로그인 form 전송 시 CSRF 토큰을 전송해야 함
+                 * 근데 머스테치는 CSRF 토큰을 제공해주지 않음
                  */
-                .csrf().disable()
+                
+                // 해당 경로의 URL은 CSRF 보호에서 제외
+                .csrf().ignoringAntMatchers("/board/**")
+
+                .and()
 
                 /**
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                    .antMatchers("/auth/**", "/board/main", "/board/content/**","/board/search" , "/confirm/**")//해당 경로에 대해 인증없이 접근가능
+                    .antMatchers("/auth/**", "/board/main", "/board/content/**","/board/search")//해당 경로에 대해 인증없이 접근가능
                     .permitAll() // 권한에 다른 접근을 설정함
                     .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
                 
