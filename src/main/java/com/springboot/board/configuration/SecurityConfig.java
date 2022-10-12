@@ -93,6 +93,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * /logout 에 접근하면 세션을 제거해줌
                  * 기본적으로 WebSecurityConfigureAdapter 를 사용하면 자동으로 적용됨 
                  */
+
                 .logout()
                     .logoutUrl("/auth/logout") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
                     .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지

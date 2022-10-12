@@ -10,6 +10,7 @@ import com.springboot.board.service.UserService;
 import com.springboot.board.validator.CheckEmailValidator;
 import com.springboot.board.validator.CheckNicknameValidator;
 import com.springboot.board.validator.CheckUsernameValidator;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

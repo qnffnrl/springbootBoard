@@ -1,5 +1,6 @@
 package com.springboot.board;
 
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ public class BoardApplication {
 
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(BoardApplication.class, args);
 
 	}
