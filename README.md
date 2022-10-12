@@ -1,7 +1,12 @@
-## Build/Deploy to -> http://www.risker.shop:8080/board/main
 # springbootBoard
-## Toy 1
 Springboot를 활용 게시판 제작
+
+## Build/Deploy to -> http://www.risker.shop:8080/board/main
+
+## CI/CD
+* Jenkins 2.361.2
+* Git 1.8.3
+* Github 연동 / github에 소스 push 시 젠킨스에서 자동으로 빌드하고 jar 배포까지 하도록 설정
 
 ## 게시판 게시글 데이터베이스 설계 (v2)
 * view (BIGINT -> INT)
