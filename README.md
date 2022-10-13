@@ -41,6 +41,7 @@ Springboot를 활용 게시판 제작
 * Repository(VO) 테스트 -> JpaRepository를 상속받은 BoardRepository에서 CRUD 테스트
 * 게시글을 insert하는 테스트에서 에러빌생 -> Entity 인스턴스에 임의의 값들을 넣고 이 인스턴스를 또다른 Entity 인스턴스에 save()하는 과정 (save()는 JpaRepositry에서 지원하는 메서드)
 * 임의 값을 넣은 Entity 인스턴스는 문제가 없는데, Board newBoard = boardRepository.save(board); 여기서 boardRepository에 NullPointExeption이 발생함 -> 해결중
+* (각 필드들은 Null 아님)
 
 ## TroubleShooting 회고
 ### (게시글 상세 페이지)
