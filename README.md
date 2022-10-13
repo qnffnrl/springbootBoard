@@ -33,6 +33,15 @@ Springboot를 활용 게시판 제작
 * https://azderica.github.io/00-java-repositorys/
 * https://dev-coco.tistory.com/114?category=1032063
 
+## @Test (JUnit5 활용 단위/통합 테스트 해보기)
+* 테스트 클래스는 public으로 선언 / 클래스명은 TestClassName + Test로 작성(관례)
+* @Test 어노테이션 명시
+
+* Entity 테스트 케이스 작성 -> assertEquals() 활용 -> 테스트에서 DTO로 넣은 값들이 잘들어가는지 테스트
+* Repository(VO) 테스트 -> JpaRepository를 상속받은 BoardRepository에서 CRUD 테스트
+* 게시글을 insert하는 테스트에서 에러빌생 -> Entity 인스턴스에 임의의 값들을 넣고 이 인스턴스를 또다른 Entity 인스턴스에 save()하는 과정 (save()는 JpaRepositry에서 지원하는 메서드)
+* 임의 값을 넣은 Entity 인스턴스는 문제가 없는데, Board newBoard = boardRepository.save(board); 여기서 boardRepository에 NullPointExeption이 발생함 -> 해결중
+
 ## TroubleShooting 회고
 ### (게시글 상세 페이지)
 * 특정 게시글을 불러오는 기능에서 JPARepository의 findById()를 사용하는데 해당 함수 반환값이 Optional임
