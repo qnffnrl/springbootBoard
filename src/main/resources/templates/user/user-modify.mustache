@@ -1,9 +1,8 @@
-{{>layout/header}}
+{{>layouts/head}}
 <div id="posts_list">
     <div class="container col-md-4">
         <form>
             <label for="id"></label>
-            <input type="hidden" id="id" value="{{userDto.id}}"/>
             <input type="hidden" id="id" value="{{userDto.modifiedDate}}"/>
             <div class="form-group">
                 <label for="username">아이디</label>
@@ -25,8 +24,9 @@
                 <input type="email" id="email" value="{{userDto.email}}" class="form-control" readonly/>
             </div>
         </form>
-        <button id="btn-modify" class="btn btn-primary bi bi-check-lg"> 완료</button>
+        <button id="btn-modify" class="btn btn-primary bi bi-check-lg">완료</button>
         <a href="/board/main" role="button" class="btn btn-info bi bi-arrow-return-left"> 목록</a>
     </div>
 </div>
-{{>layout/footer}}
+<script src="/static/js/app.js" type="text/javascript"></script>
+{{>layouts/footer}}

@@ -3,6 +3,8 @@ package com.springboot.board.controller;
 import com.springboot.board.data.dto.UserDto;
 import com.springboot.board.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -20,7 +22,9 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserApiController {
 
     private final UserService userService;
+
     private final AuthenticationManager authenticationManager;
+
 
     @PutMapping("/auth/user")
     public ResponseEntity<String> modify(@RequestBody UserDto dto){

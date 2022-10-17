@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 @Component
 public class LoginUserArgumentResolver implements HandlerMethodArgumentResolver {
 
-    private HttpSession httpSession;
+    private final HttpSession httpSession;
 
     @Override
     public boolean supportsParameter(MethodParameter methodParameter) {
