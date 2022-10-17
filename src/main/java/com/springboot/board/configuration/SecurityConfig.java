@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
                 
                 // 해당 경로의 URL은 CSRF 보호에서 제외
-                .csrf().ignoringAntMatchers("/board/**")
+                .csrf().ignoringAntMatchers("/board/**", "/api/**")
 
                 .and()
 

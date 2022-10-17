@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
-public class User {
+public class User extends TimeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -32,5 +32,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
+
+    public void modify(String nickname, String password){
+        this.nickname = nickname;
+        this.password = password;
+    }
 
 }

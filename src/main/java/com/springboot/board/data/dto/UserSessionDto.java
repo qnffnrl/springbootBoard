@@ -18,6 +18,7 @@ public class UserSessionDto implements Serializable {
     private String nickname;
     private String email;
     private Role role;
+    private String modifiedDate;
 
 
     /**
@@ -29,5 +30,6 @@ public class UserSessionDto implements Serializable {
         this.nickname = user.getNickname();
         this.email = user.getEmail();
         this.role = user.getRole();
+        this.modifiedDate = user.getModifiedDate();
     }
 }

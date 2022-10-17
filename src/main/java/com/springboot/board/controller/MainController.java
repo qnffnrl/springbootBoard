@@ -1,5 +1,6 @@
 package com.springboot.board.controller;
 
+import com.springboot.board.annotation.LoginUser;
 import com.springboot.board.data.dto.BoardDto;
 import com.springboot.board.data.dto.BoardUpdateRequestDto;
 import com.springboot.board.data.dto.UserDto;
@@ -10,12 +11,14 @@ import com.springboot.board.service.UserService;
 import com.springboot.board.validator.CheckEmailValidator;
 import com.springboot.board.validator.CheckNicknameValidator;
 import com.springboot.board.validator.CheckUsernameValidator;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
@@ -218,6 +221,31 @@ public class MainController {
         return "redirect:/board/main";
     }
 
+    /**
+     *  게시글 검색
+     */
+    @GetMapping("/board/search")
+    public String search(String keyword, Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+        Page<Board> searchedList = boardService.search(keyword, pageable);
+
+        model.addAttribute("searchedList", searchedList);
+        model.addAttribute("keyword", keyword);
+
+        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
+        model.addAttribute("next", pageable.next().getPageNumber());
+        model.addAttribute("hasNext", searchedList.hasNext());
+        model.addAttribute("hasPrev", searchedList.hasPrevious());
+
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
+
+        return "/board/search";
+
+    }
+
+//**********************회원 관련 정보**************************
 
     /**
      * 회원가입
@@ -259,28 +287,22 @@ public class MainController {
     }
 
     /**
-     *  게시글 검색
+     *  회원 정보 수정
+     *  참고 : https://sas-study.tistory.com/m/302
      */
-    @GetMapping("/board/search")
-    public String search(String keyword, Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
-        Page<Board> searchedList = boardService.search(keyword, pageable);
-
-        model.addAttribute("searchedList", searchedList);
-        model.addAttribute("keyword", keyword);
-
-        model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
-        model.addAttribute("next", pageable.next().getPageNumber());
-        model.addAttribute("hasNext", searchedList.hasNext());
-        model.addAttribute("hasPrev", searchedList.hasPrevious());
-
-        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user.getNickname());
+    @GetMapping("/auth/modify")
+    public String modify(Model model, @LoginUser UserSessionDto userDto){
+        if(userDto != null){
+            model.addAttribute("user", userDto.getNickname());
+            model.addAttribute("userDto", userDto);
         }
-
-        return "/board/search";
-
+        return "/user/user-modify";
     }
+
+
+
+//********************** << 회원 관련 정보**************************
+
 }
 
 
