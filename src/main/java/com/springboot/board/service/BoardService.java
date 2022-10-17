@@ -23,7 +23,6 @@ public class BoardService {
      */
     public void boardRegistration(Board board){
         boardRepository.save(board);
-
     }
 
     /**

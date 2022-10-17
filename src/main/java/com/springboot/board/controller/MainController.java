@@ -156,7 +156,7 @@ public class MainController {
          */
 
         model.addAttribute("board", boardService.findById(number));
-        boardService.updateView(number);
+        boardService.updateView(number); //조회수 카운트
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
         if (user != null) {
             model.addAttribute("user", user.getNickname());

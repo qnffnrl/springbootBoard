@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation "com.github.ulisesbocchio:jasypt-spring-boot-starter:3.0.4"
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	compileOnly 'org.projectlombok:lombok'
 	runtimeOnly 'org.mariadb.jdbc:mariadb-java-client'
 	annotationProcessor 'org.projectlombok:lombok'
@@ -45,3 +46,6 @@ bootRun {
 	systemProperty "spring.profiles.active", activeProfile
 }
 
+test {
+	useJUnitPlatform()
+}
