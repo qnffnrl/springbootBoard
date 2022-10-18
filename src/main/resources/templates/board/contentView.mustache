@@ -1,20 +1,25 @@
 {{>layouts/head}}
 
-    <br><br>
-    번호 : {{number}}<br>
-    작성자 : {{board.writer}}<br>
-    제목 : {{board.title}}<br>
-    내용 : {{board.content}}<br>
-    조회수 : {{board.view}}<br>
+    <div id="contentView-content">
+        <br><br>
+        번호 : {{number}}<br>
+        작성자 : {{board.writer}}<br>
+        제목 : {{board.title}}<br>
+        내용 : {{board.content}}<br>
+        조회수 : {{board.view}}<br>
+    </div>
 
 
     <form>
         <input type="hidden" id="number" value="{{number}}">
     </form>
 
-    <button onclick="location.href='/board/updateForm/{{number}}'">수정</button>
-    <button id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
-
-    <button onclick="location.href='/board/main'">돌아가기</button>
+    <div id="contentView-btns">
+        <div id="contentView-btns-child">
+            <button class="btn btn-outline-dark w-50" onclick="location.href='/board/updateForm/{{number}}'">수정</button>
+            <button class="btn btn-outline-dark w-50" id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
+            <button class="btn btn-outline-dark w-50" onclick="location.href='/board/main'">돌아가기</button>
+        </div>
+    </div>
 
 {{>layouts/footer}}

@@ -1,23 +1,17 @@
-<!doctype html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-<form action="/board/update/{{number}}" method="post">
-    {{#board}}<br><br>
-        번호 : {{number}}<br>
-        작성자 : {{writer}}<br>
-        제목 : <input type="text" value="{{title}}" name="title"><br>
-        내용 : <textarea name="content" id="" cols="30" rows="10">{{content}}</textarea><br>
-        조회수 : {{view}}<br>
-    {{/board}}
-    <input type="submit" value="수정완료">
-    <button onclick="location.href='/board/content/{{number}}'">취소</button>
-</form>
-</body>
-</html>
+{{>layouts/head}}
+<div id="contentView-content">
+    <form action="/board/update/{{number}}" method="post">
+        {{#board}}<br><br>
+            번호 : {{number}}<br>
+            작성자 : {{writer}}<br>
+            제목 : <input type="text" value="{{title}}" name="title"><br>
+            내용 : <textarea name="content" id="" cols="30" rows="10">{{content}}</textarea><br>
+            조회수 : {{view}}<br>
+        {{/board}}
+        <div id="contentView-btns">
+            <button class="btn btn-danger updateForm-btns" onclick="location.href='/board/content/{{number}}'">취소</button>
+            <input class="btn btn-success updateForm-btns" type="submit" value="수정완료">
+        </div>
+    </form>
+</div>
+{{>layouts/footer}}
