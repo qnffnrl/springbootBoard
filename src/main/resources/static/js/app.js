@@ -29,7 +29,7 @@ const main = {
         const con_check = confirm("수정하시겠습니까?");
         if (con_check === true) {
             $.ajax({
-                type: "POST",
+                type: "PUT",
                 url: "/auth/user",
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify(data)

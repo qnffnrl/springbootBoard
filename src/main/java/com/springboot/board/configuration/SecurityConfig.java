@@ -91,7 +91,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * /login 경로로 접근하면 Spring Security 에서 제공하는 Form 이 나옴
                  */
                 .formLogin()
-                    .loginPage("/auth/login") // 기본 제공 Form 말고 커스텀 로그인 폼을 쓸때 사용
                     .loginProcessingUrl("/auth/loginProc") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
                     .defaultSuccessUrl("/board/main") // 로그인 성공 시 이동하는 페이지
                     .failureHandler(customFailureHandler)

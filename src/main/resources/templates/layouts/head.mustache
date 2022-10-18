@@ -20,10 +20,24 @@
             color: green;
             font-size: 70px;
         }
+        #mainTitleText:hover {
+            color: red;
+        }
         #page {
             width: 100%;
             margin: 0 auto;
             height: 100%;
+        }
+        #btn-home {
+            border-radius: 8px;
+            border: 1px solid black;
+            height: 85%;
+            margin-top: 3px;
+            margin-left: 5px;
+        }
+        #btn-home:hover {
+            color: white;
+            background-color: green;
         }
         table{
             table-layout:fixed;
@@ -60,7 +74,7 @@
 <!-- 페이지 로고 Banner -->
     <div class="w-100  d-flex justify-content-center">
         <div id="mainTitle" class="w-50">
-            <h1><em><a id="mainTitleText" href="/board/main">My First Springboot Board</a></em></h1>
+            <h1><em><span><a id="mainTitleText" href="/board/main">My First Springboot Board</a></span></em></h1>
             <hr>
             <h2><u>By risker</u></h2>
         </div>
@@ -82,16 +96,11 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     {{^user}}
-                        <form action="/auth/loginProc" method="post">
-                            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
-                            <input type="text" name="username" placeholder="아이디">
-                            <input type="password" name="password" placeholder="비밀번호">
-                            <input type="submit" class="btn btn-primary bi bi-person m-1" value="로그인">
-                        </form>
+                        <button onclick="location.href='/login'" class="text-white bg-secondary btn bi bi-person">로그인</button> &nbsp;
                         <button onclick="location.href='/auth/join'" class="text-white bg-secondary btn bi bi-person">회원가입</button>
                     {{/user}}
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="/board/main">Home</a>
+                        <a id="btn-home" class="nav-link active" aria-current="page" href="/board/main"><u>Home</u></a>
                     </li>
                 </ul>
                 <!-- << -->
