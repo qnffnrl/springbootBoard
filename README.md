@@ -101,4 +101,8 @@ Springboot를 활용 게시판 제작
 ### (회원 정보 수정 기능 구현 중2)
 * 회원 정보를 수정하는 폼에서 정보를 변경하고 확인 시 자바스크립트를 거쳐서 confirm이나 alert를 출력하고 컨트롤러로 가서 흐름을 완료하는데 자바스크립트가 먹히지 않음
 * 처음엔 static 경로를 못찾는다고 떠서 경로를 다시 맞게 설정함 -> 근데도 작동하지 않음 -> 크롬 콘솔에서 its MIME type ('application/json') is not executable, and strict MIME type checking is enabled. 이런 오류가 뜸 -> 계속 원인 찾는중 
+* 해결 -> resources의 static 에 있는 자바스크립트를 못찾는듯하다. -> 일단 자바스크립트 코드를 view 페이지에 넣고 해보니깐 잘됨
+* 또 오류 발생 확인 버튼을 누르니 readyState 4, status 0 statusText error .... 이런 오류가 뜸
+* 해결 -> view에서 수정할 정보들의 input 태그의 id 명을 자바스크립트 쪽의 id 명과 다르게 해놓음
+* 다른 오류 발생 -> 이제는 readyState 0 이 뜸, 검색해보니깐 ajax 쪽에서 오류가 나는듯 하다. 더 해보고 안되면 로직을 자바스크립트 말고 자바 코드로 바꿔야겠다...
 
