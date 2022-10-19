@@ -28,6 +28,7 @@ public class UserApiController {
 
     @PutMapping("/auth/user")
     public ResponseEntity<String> modify(@RequestBody UserDto dto){
+        System.out.println("================================");
         userService.modify(dto);
 
         Authentication authentication = authenticationManager.authenticate(
