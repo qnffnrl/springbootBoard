@@ -100,16 +100,21 @@ public class MainController {
         model.addAttribute("error", error);
         model.addAttribute("exception", exception);
 
+
 //      페이징 버튼 정보
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
         model.addAttribute("hasNext", boards.hasNext());
         model.addAttribute("hasPrev", boards.hasPrevious());
 
-        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
-        if (user != null) {
-            model.addAttribute("user", user.getNickname());
+        if (error == null) {
+            UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+            if (user != null) {
+                model.addAttribute("user", user.getNickname());
+            }
         }
+
+
 
         return "board/main";
     }
