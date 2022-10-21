@@ -20,12 +20,6 @@
                     password: $('#password').val()
                 }
 
-                console.log(data.id);
-                console.log(data.modifiedDate);
-                console.log(data.nickname);
-                console.log(data.password);
-                console.log(data.username);
-
                 if(!data.nickname || data.nickname.trim() === "" || !data.password || data.password.trim() === "") {
                     alert("공백 또는 입력하지 않은 부분이 있습니다.");
                     return false;

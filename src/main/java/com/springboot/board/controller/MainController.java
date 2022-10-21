@@ -281,10 +281,14 @@ public class MainController {
      * 로그아웃
      */
     @GetMapping("/auth/logout")
-    public String logout(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    public String logout(Model model, HttpServletRequest request, HttpServletResponse response) throws Exception{
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
         }
         return "redirect:/board/main";
     }
@@ -299,9 +303,16 @@ public class MainController {
             model.addAttribute("user", userDto.getNickname());
             model.addAttribute("userDto", userDto);
         }
+        UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+        if (user != null) {
+            model.addAttribute("user", user.getNickname());
+        }
         return "/user/user-modify";
     }
 
+    /**
+     *  회원 정보 수정 (DB 적용)
+     */
     @PutMapping("/auth/user")
     public ResponseEntity<String> modify(@RequestBody UserDto dto){
         userService.modify(dto);
