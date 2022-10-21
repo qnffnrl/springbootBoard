@@ -13,12 +13,19 @@
 
             modify : function () {
                 const data = {
-                    // id: $('#id').val(),
+                    id: $('#id').val(),
                     modifiedDate: $('#modifiedDate').val(),
                     username: $('#username').val(),
                     nickname: $('#nickname').val(),
                     password: $('#password').val()
                 }
+
+                console.log(data.id);
+                console.log(data.modifiedDate);
+                console.log(data.nickname);
+                console.log(data.password);
+                console.log(data.username);
+
                 if(!data.nickname || data.nickname.trim() === "" || !data.password || data.password.trim() === "") {
                     alert("공백 또는 입력하지 않은 부분이 있습니다.");
                     return false;
@@ -62,7 +69,7 @@
 <div id="posts_list">
     <div class="container col-md-4">
         <form>
-            <label for="id"></label>
+            <input type="hidden" id="id" value="{{userDto.id}}">
             <input type="hidden" id="modifiedDate" value="{{userDto.modifiedDate}}"/>
             <div class="form-group">
                 <label for="username">아이디</label>

@@ -16,6 +16,8 @@ import javax.validation.constraints.Pattern;
 @Builder
 public class UserDto {
 
+    private Long id;
+
     @NotBlank(message = "아이디를 입력하세요.")
     private String username;
 
@@ -38,6 +40,7 @@ public class UserDto {
      */
     public User toEntity(){
         User user = User.builder()
+                .id(id)
                 .username(username)
                 .password(password)
                 .nickname(nickname)

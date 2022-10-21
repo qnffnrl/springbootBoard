@@ -45,6 +45,7 @@ public class MainController {
     private final CheckUsernameValidator checkUsernameValidator;
     private final CheckNicknameValidator checkNicknameValidator;
     private final CheckEmailValidator checkEmailValidator;
+    private final AuthenticationManager authenticationManager;
 
     /**
      * @InitBinder
@@ -61,13 +62,14 @@ public class MainController {
     }
 
     @Autowired
-    public MainController(HttpSession session, BoardService boardService, UserService userService, CheckUsernameValidator checkUsernameValidator, CheckNicknameValidator checkNicknameValidator, CheckEmailValidator checkEmailValidator) {
+    public MainController(HttpSession session, BoardService boardService, UserService userService, CheckUsernameValidator checkUsernameValidator, CheckNicknameValidator checkNicknameValidator, CheckEmailValidator checkEmailValidator, AuthenticationManager authenticationManager) {
         this.session = session;
         this.boardService = boardService;
         this.userService = userService;
         this.checkUsernameValidator = checkUsernameValidator;
         this.checkNicknameValidator = checkNicknameValidator;
         this.checkEmailValidator = checkEmailValidator;
+        this.authenticationManager = authenticationManager;
     }
 
     /**
@@ -300,6 +302,18 @@ public class MainController {
         return "/user/user-modify";
     }
 
+    @PutMapping("/auth/user")
+    public ResponseEntity<String> modify(@RequestBody UserDto dto){
+        userService.modify(dto);
+        System.out.println(dto.getUsername());
+        System.out.println(dto.getNickname());
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+
+        return new ResponseEntity<>("success", HttpStatus.OK);
+    }
 
 //********************** << 회원 관련 정보**************************
 

@@ -13,6 +13,7 @@ import java.io.Serializable;
 @Getter
 public class UserSessionDto implements Serializable {
 
+    private Long id;
     private String username;
     private String password;
     private String nickname;
@@ -25,6 +26,7 @@ public class UserSessionDto implements Serializable {
      *  Entity -> DTO
      */
     public UserSessionDto(User user) {
+        this.id = user.getId();
         this.username = user.getUsername();
         this.password = user.getPassword();
         this.nickname = user.getNickname();
