@@ -1,5 +1,6 @@
 package com.springboot.board.configuration;
 
+import com.springboot.board.service.CustomOAuth2UserService;
 import com.springboot.board.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -13,6 +14,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
  * @EnableWebSecurity : 본 클래스가 Spring Security 설정 클래스임을 알려줌
@@ -26,6 +29,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final CustomUserDetailsService customUserDetailsService;
     private final AuthenticationFailureHandler customFailureHandler;
+    private final CustomOAuth2UserService customOAuth2UserService;
 
 
     /**
@@ -70,7 +74,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * Spring Security 는 로그인 form 전송 시 CSRF 토큰을 전송해야 함
                  * 근데 머스테치는 CSRF 토큰을 제공해주지 않음
                  */
-                
+
                 // 해당 경로의 URL은 CSRF 보호에서 제외
                 .csrf().ignoringAntMatchers("/board/**", "/auth/user")
 
@@ -80,10 +84,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                    .antMatchers("/auth/**", "/board/main", "/board/content/**","/board/search")//해당 경로에 대해 인증없이 접근가능
-                    .permitAll() // 권한에 다른 접근을 설정함
-                    .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
-                
+                .antMatchers("/auth/**", "/board/main", "/board/content/**", "/board/search")//해당 경로에 대해 인증없이 접근가능
+                .permitAll() // 권한에 다른 접근을 설정함
+                .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
+
                 .and()
 
                 /**
@@ -91,9 +95,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * /login 경로로 접근하면 Spring Security 에서 제공하는 Form 이 나옴
                  */
                 .formLogin()
-                    .loginProcessingUrl("/auth/loginProc") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
-                    .defaultSuccessUrl("/board/main") // 로그인 성공 시 이동하는 페이지
-                    .failureHandler(customFailureHandler)
+                .loginProcessingUrl("/auth/loginProc") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
+                .defaultSuccessUrl("/board/main") // 로그인 성공 시 이동하는 페이지
+                .failureHandler(customFailureHandler)
 
                 .and()
 
@@ -104,8 +108,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
 
                 .logout()
-                    .logoutUrl("/auth/logout") // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
+                    .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")) // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
+                    .invalidateHttpSession(true).deleteCookies("user") // HTTP 세션을 초기화
                     .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지
-                    .invalidateHttpSession(true); // HTTP 세션을 초기화
+
+                .and()
+
+                /**
+                 * oAuth
+                 */
+                .oauth2Login()
+                    .userInfoEndpoint()
+                    .userService(customOAuth2UserService);
+
+
+
     }
 }
