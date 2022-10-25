@@ -1,4 +1,4 @@
-package com.springboot.board.data.dto;
+package com.springboot.board.auth;
 
 
 import com.springboot.board.data.entity.Role;
@@ -23,21 +23,23 @@ public class OAuthAttributes {
     private String email;
     private Role role;
 
-    public static OAuthAttributes of(String registrationId, String userNameAttributeName, Map<String, Object> attributes) {
+    public static OAuthAttributes of(String registrationId,
+                                     String userNameAttributeName,
+                                     Map<String, Object> attributes) {
     // 구글인지 네이버인지 구분하기 위한 메소드
 
         return ofGoogle(userNameAttributeName, attributes);
 
     }
 
-    private static OAuthAttributes ofGoogle(String userNAmeAttributeName, Map<String, Object> attributes) {
+    private static OAuthAttributes ofGoogle(String userNameAttributeName, Map<String, Object> attributes) {
 
         return OAuthAttributes.builder()
                 .username((String) attributes.get("email"))
                 .email((String) attributes.get("email"))
                 .nickname((String) attributes.get("name"))
                 .attributes(attributes)
-                .nameAttributeKey(userNAmeAttributeName)
+                .nameAttributeKey(userNameAttributeName)
                 .build();
     }
 

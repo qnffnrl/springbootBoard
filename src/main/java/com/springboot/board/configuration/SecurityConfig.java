@@ -1,6 +1,6 @@
 package com.springboot.board.configuration;
 
-import com.springboot.board.service.CustomOAuth2UserService;
+import com.springboot.board.auth.CustomOAuth2UserService;
 import com.springboot.board.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -14,7 +14,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
-import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 /**
@@ -76,7 +75,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  */
 
                 // 해당 경로의 URL은 CSRF 보호에서 제외
-                .csrf().ignoringAntMatchers("/board/**", "/auth/user")
+                .csrf().ignoringAntMatchers("/board/**", "/auth/user", "/oauth2/**")
 
                 .and()
 
@@ -84,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/board/main", "/board/content/**", "/board/search")//해당 경로에 대해 인증없이 접근가능
+                .antMatchers("/auth/**", "/board/main", "/board/content/**", "/board/search", "oauth2/**")//해당 경로에 대해 인증없이 접근가능
                 .permitAll() // 권한에 다른 접근을 설정함
                 .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
 
@@ -118,10 +117,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * oAuth
                  */
                 .oauth2Login()
+                    .defaultSuccessUrl("/board/main")
                     .userInfoEndpoint()
                     .userService(customOAuth2UserService);
-
-
-
     }
 }

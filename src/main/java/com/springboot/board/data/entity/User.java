@@ -10,6 +10,7 @@ import javax.persistence.*;
 @Builder
 @Getter
 @Entity
+@Table(name = "user")
 public class User extends TimeEntity {
 
     @Id
