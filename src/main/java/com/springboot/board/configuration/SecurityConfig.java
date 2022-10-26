@@ -117,7 +117,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * oAuth
                  */
                 .oauth2Login()
-                    .defaultSuccessUrl("/board/main")
                     .userInfoEndpoint()
                     .userService(customOAuth2UserService);
     }
