@@ -7,9 +7,11 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
 
+@Slf4j
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
@@ -28,6 +30,10 @@ public class OAuthAttributes {
                                      Map<String, Object> attributes) {
     // 구글인지 네이버인지 구분하기 위한 메소드
 
+        if ("naver".equals(registrationId)) {
+            return ofNaver("id", attributes);
+        }
+
         return ofGoogle(userNameAttributeName, attributes);
 
     }
@@ -39,6 +45,20 @@ public class OAuthAttributes {
                 .email((String) attributes.get("email"))
                 .nickname((String) attributes.get("name"))
                 .attributes(attributes)
+                .nameAttributeKey(userNameAttributeName)
+                .build();
+    }
+
+    private static OAuthAttributes ofNaver(String userNameAttributeName, Map<String, Object> attributes) {
+        Map<String, Object> response = (Map<String, Object>) attributes.get("response");
+
+        log.info("naver response : " + response);
+
+        return OAuthAttributes.builder()
+                .username((String) response.get("email"))
+                .email((String) response.get("email"))
+                .nickname((String) response.get("nickname"))
+                .attributes(response)
                 .nameAttributeKey(userNameAttributeName)
                 .build();
     }
