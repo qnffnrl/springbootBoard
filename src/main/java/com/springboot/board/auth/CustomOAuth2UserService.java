@@ -34,9 +34,6 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
             OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
             OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-            // flow was into this class?
-            System.out.println("==========================================" + oAuth2User);
-
             // OAuth2 서비스 id 구분 코드 (구글, 네이버 etc)
             String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
@@ -60,6 +57,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     // user 가 이미 저장되어 있으면 업데이트
     private User saveOrUpdate(OAuthAttributes attributes) {
+
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(User::updateModifiedDate)
                 .orElse(attributes.toEntity());

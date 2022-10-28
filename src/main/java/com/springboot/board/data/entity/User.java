@@ -24,7 +24,7 @@ public class User extends TimeEntity {
     @Column(nullable = false)
     private String nickname;
 
-    @Column(nullable = false, length = 100)
+    @Column(length = 100)
     private String password;
 
     @Column(nullable = false, length = 50)
