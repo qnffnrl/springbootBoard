@@ -68,7 +68,26 @@
             width: 30%;
             margin: 5px 5px;
         }
-        .weather {position: absolute; right: 0; height: 163px; width: 200px; font-size: 1.8em; text-align: center; font-weight: bolder; color: darkcyan;}
+        #mainAnchor {
+            font-weight: bolder;
+            color: black;
+            text-decoration: none;
+            animation: anchor 2s infinite;
+        }
+        @keyframes anchor {
+            to {
+                color: red;
+            }
+        }
+        #mainTd:hover {
+            animation: flag 1s infinite;
+        }
+        @keyframes flag {
+            to{
+                background-color: dimgray;
+            }
+        }
+        .weather {position: absolute; right: 0; height: 163px; width: 200px; font-size: 1.8em; text-align: center; font-weight: bolder; color: darkcyan; padding: 5px;}
         .weather > div {height: 30%;}
         .weather > .top > div {width: 50%;}
         .top {display: flex; justify-content: space-evenly; align-items: center;}
@@ -131,7 +150,7 @@
                 <div class="CurrTemp"></div>
             </div>
             <div class="City"></div>
-            <div><a href="https://openweathermap.org/">OpenWeather.org</a></div>
+            <div><a href="https://openweathermap.org/">OpenWeather.org &nbsp;</a></div>
         </div>
     </div>
 <!--  <<  -->
