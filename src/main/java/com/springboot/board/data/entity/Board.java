@@ -4,7 +4,6 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @Entity
@@ -27,6 +26,13 @@ public class Board extends TimeEntity{
 
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
+
+    /**
+     * 외래키 매핑
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
 
     private LocalDate updateAt;
