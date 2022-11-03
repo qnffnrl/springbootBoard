@@ -34,6 +34,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.sql.Timestamp;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -144,7 +145,7 @@ public class MainController {
         Board board = new Board();
         board.setTitle(boardDto.getTitle());
         board.setContent(boardDto.getContent());
-        board.setUpdateAt(LocalDateTime.now());
+        board.setUpdateAt(LocalDate.now());
         board.setWriter(user.getNickname());
 
         boardService.boardRegistration(board);
@@ -199,7 +200,7 @@ public class MainController {
 
         boardTmp.setTitle(boardUpdateRequestDto.getTitle());
         boardTmp.setContent(boardUpdateRequestDto.getContent());
-        boardTmp.setUpdateAt(LocalDateTime.now());
+        boardTmp.setUpdateAt(LocalDate.now());
 
         boardService.boardRegistration(boardTmp);
 

@@ -3,6 +3,7 @@ package com.springboot.board.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -13,7 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @Table(name = "board")
-public class Board {
+public class Board extends TimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,5 +29,5 @@ public class Board {
     private int view;
 
 
-    private LocalDateTime updateAt;
+    private LocalDate updateAt;
 }
