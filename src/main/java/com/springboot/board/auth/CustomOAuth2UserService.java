@@ -26,23 +26,19 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     /**
      *  플랫폼 별로 구분 하기 위해 본 클래스 선언
      */
+     @Override
+     public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
 
-        @Override
-        public OAuth2User loadUser(OAuth2UserRequest userRequest) throws OAuth2AuthenticationException {
+        // DefaultOAuth2User 서비스를 통해 User 정보를 가져와야 하기 때문에 대리자 생성
+        OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
+        OAuth2User oAuth2User = delegate.loadUser(userRequest);
 
-            // DefaultOAuth2User 서비스를 통해 User 정보를 가져와야 하기 때문에 대리자 생성
-            OAuth2UserService<OAuth2UserRequest, OAuth2User> delegate = new DefaultOAuth2UserService();
-            OAuth2User oAuth2User = delegate.loadUser(userRequest);
+        // OAuth2 서비스 id 구분 코드 (구글, 네이버 etc)
+        String registrationId = userRequest.getClientRegistration().getRegistrationId();
 
-            // flow was into this class?
-            System.out.println("==========================================" + oAuth2User);
-
-            // OAuth2 서비스 id 구분 코드 (구글, 네이버 etc)
-            String registrationId = userRequest.getClientRegistration().getRegistrationId();
-
-            // OAuth2 로그인 진행시 키가 되는 필드 값(PK)
-            String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
-                .getUserInfoEndpoint().getUserNameAttributeName();
+        // OAuth2 로그인 진행시 키가 되는 필드 값(PK)
+        String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
+            .getUserInfoEndpoint().getUserNameAttributeName();
 
         // OAuth2UserService 를 통해 가져온 데이터를 담을 클래스
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
