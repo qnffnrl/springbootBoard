@@ -40,6 +40,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
         String userNameAttributeName = userRequest.getClientRegistration().getProviderDetails()
             .getUserInfoEndpoint().getUserNameAttributeName();
 
+
         // OAuth2UserService 를 통해 가져온 데이터를 담을 클래스
         OAuthAttributes attributes = OAuthAttributes.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
 
@@ -56,6 +57,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
 
     // user 가 이미 저장되어 있으면 업데이트
     private User saveOrUpdate(OAuthAttributes attributes) {
+
         User user = userRepository.findByEmail(attributes.getEmail())
                 .map(User::updateModifiedDate)
                 .orElse(attributes.toEntity());

@@ -1,5 +1,4 @@
 {{>layouts/head}}
-
     <div class="d-flex justify-content-center m-4">
         <table class="table table-striped text-center p-5">
             <thead>
@@ -17,7 +16,7 @@
             <tr>
                 <td>{{number}}</td>
                 <td>{{writer}}</td>
-                <td><a href="/board/content/{{number}}">{{title}}</a></td>
+                <td id="mainTd"><a id="mainAnchor" href="/board/content/{{number}}">{{title}}</a></td>
                 <td>{{view}}</td>
                 <td id="time">{{updateAt}}</td>
             </tr>

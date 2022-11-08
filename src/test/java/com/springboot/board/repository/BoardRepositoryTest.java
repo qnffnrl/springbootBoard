@@ -7,6 +7,7 @@ import org.apache.tomcat.jni.Local;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 
@@ -26,7 +27,7 @@ class BoardRepositoryTest {
         board.setTitle("testTitle");
         board.setWriter("testWriter");
         board.setContent("testContent");
-        board.setUpdateAt(LocalDateTime.now());
+        board.setUpdateAt(LocalDate.now());
 
         //debug : boardRepository NullPointException 발생
         Board newBoard = boardRepository.save(board);

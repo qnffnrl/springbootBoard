@@ -3,7 +3,7 @@ package com.springboot.board.data.entity;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 
 @Entity
@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @ToString
 @Table(name = "board")
-public class Board {
+public class Board extends TimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,6 +27,13 @@ public class Board {
     @Column(columnDefinition = "integer default 0", nullable = false)
     private int view;
 
+    /**
+     * 외래키 매핑
+     */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private LocalDateTime updateAt;
+
+    private LocalDate updateAt;
 }
