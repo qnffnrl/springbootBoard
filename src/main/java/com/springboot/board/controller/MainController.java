@@ -1,13 +1,12 @@
 package com.springboot.board.controller;
 
 import com.springboot.board.annotation.LoginUser;
-import com.springboot.board.data.dto.BoardDto;
-import com.springboot.board.data.dto.BoardUpdateRequestDto;
-import com.springboot.board.data.dto.UserDto;
-import com.springboot.board.data.dto.UserSessionDto;
+import com.springboot.board.data.dto.*;
 import com.springboot.board.data.entity.Board;
+import com.springboot.board.data.entity.Comment;
 import com.springboot.board.service.BoardService;
 import com.springboot.board.service.UserService;
+import com.springboot.board.service.CommentService;
 import com.springboot.board.validator.CheckEmailValidator;
 import com.springboot.board.validator.CheckNicknameValidator;
 import com.springboot.board.validator.CheckUsernameValidator;
@@ -33,10 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Map;
 
 @Controller
@@ -44,6 +41,7 @@ public class MainController {
 
     private final HttpSession session;
     private final BoardService boardService;
+    private final CommentService commentService;
     private final UserService userService;
     private final CheckUsernameValidator checkUsernameValidator;
     private final CheckNicknameValidator checkNicknameValidator;
@@ -65,9 +63,10 @@ public class MainController {
     }
 
     @Autowired
-    public MainController(HttpSession session, BoardService boardService, UserService userService, CheckUsernameValidator checkUsernameValidator, CheckNicknameValidator checkNicknameValidator, CheckEmailValidator checkEmailValidator, AuthenticationManager authenticationManager) {
+    public MainController(HttpSession session, BoardService boardService, CommentService commentService, UserService userService, CheckUsernameValidator checkUsernameValidator, CheckNicknameValidator checkNicknameValidator, CheckEmailValidator checkEmailValidator, AuthenticationManager authenticationManager) {
         this.session = session;
         this.boardService = boardService;
+        this.commentService = commentService;
         this.userService = userService;
         this.checkUsernameValidator = checkUsernameValidator;
         this.checkNicknameValidator = checkNicknameValidator;
@@ -166,9 +165,20 @@ public class MainController {
          *  ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
          */
 
-        model.addAttribute("board", boardService.findById(number));
+        Board dto = boardService.findById(number);
+
+        /* 댓글 */
+        List<Comment> comments = dto.getComments();
+
+
+        if (comments != null && !comments.isEmpty()) {
+            model.addAttribute("comments", comments);
+        }
+
+        model.addAttribute("board", dto);
         boardService.updateView(number); //조회수 카운트
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
+
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
@@ -332,6 +342,18 @@ public class MainController {
     }
 
 //********************** << 회원 관련 정보**************************
+
+
+//********************** 댓글 **************************
+
+    @PostMapping("/board/content/{number}/comments")
+    public ResponseEntity commentSave(@PathVariable Long number, @RequestBody CommentRequestDto dto,
+                                      @LoginUser UserSessionDto userSessionDto){
+        return ResponseEntity.ok(commentService.commentSave(userSessionDto.getNickname(), number, dto));
+    }
+
+//********************** << 댓글 **************************
+
 
 }
 

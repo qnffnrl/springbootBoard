@@ -1,0 +1,60 @@
+<br>
+<div class="card">
+    <div class="card-header bi bi-chat-right-dots"> Write a Comment </div>
+
+    <form>
+        <input type="hidden" id="boardId" value="{{board.number}}">
+        {{#user}}
+            <div class="card-body">
+                <textarea id="comment" class="form-control" rows="4" placeholder="댓글을 입력하세요"></textarea>
+            </div>
+            <div class="card-footer">
+                <button type="button" id="btn-comment-save" class="btn btn-outline-primary bi bi-pencil-square">등록</button>
+            </div>
+        {{/user}}
+        {{^user}}
+            <div class="card-board" style="font-size: small"><a href="/login">로그인</a>을 하시면 댓글을 등록할 수 있습니다.</div>
+        {{/user}}
+    </form>
+    <script>
+        const main = {
+            init : function() {
+                const _this = this;
+
+                // 댓글 저장
+                $('#btn-comment-save').on('click', function () {
+                    _this.commentSave();
+                });
+
+            },
+        /** 댓글 저장 */
+        commentSave : function () {
+            const data = {
+                postsId: $('#boardId').val(),
+                comment: $('#comment').val()
+            }
+
+            // 공백 및 빈 문자열 체크
+            if (!data.comment || data.comment.trim() === "") {
+                alert("공백 또는 입력하지 않은 부분이 있습니다.");
+                return false;
+            } else {
+                $.ajax({
+                    type: 'POST',
+                    url: '/board/content/' + data.postsId + '/comments',
+                    // dataType: 'JSON',
+                    contentType: 'application/json; charset=utf-8',
+                    data: JSON.stringify(data)
+                }).done(function () {
+                    alert('댓글이 등록되었습니다.');
+                    window.location.reload();
+                }).fail(function (error) {
+                    alert(JSON.stringify(error));
+                });
+            }
+        }
+        };
+
+        main.init();
+    </script>
+</div>
