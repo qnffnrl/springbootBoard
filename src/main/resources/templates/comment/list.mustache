@@ -3,15 +3,86 @@
     <div class="card-header bi bi-chat-dots">{{#comments.size}}{{comments.size}}{{/comments.size}} Comments</div>
     <ul class="list-group-flush">
         {{#comments}}
-            <li class="list-group-item">
+            <li id="comment-{{id}}" class="list-group-item">
                 <span>
                     <span style="font-size: small">{{user.nickname}}</span>
                     <span style="font-size: xx-small">{{createdData}}</span>&nbsp;
-                    <button class="badge bi bi-pencil-square" style="color: black">수정</button>
-                    <button class="badge bi bi-trash" style="color: black">삭제</button>
                 </span>
-                <div>{{comment}}</div>
+
+                <form>
+                    <input type="hidden" id="id" value="{{id}}">
+                    <input type="hidden" id="postsId" value="{{board.number}}">
+                    <div class="form-group">
+                        <textarea class="form-control" id="comment-content" rows="3">{{comment}}</textarea>
+                    </div>
+                    <input type="button" id="btn-comment-update" value="수정" class="bi bi-pencil-square" style="color: black">
+                    <button onclick="main.commentDelete({{board.number}}, {{id}})" class="badge bi bi-trash" style="color: black">삭제</button>
+                </form>
+
             </li>
         {{/comments}}
     </ul>
 </div>
+<script>
+    const main = {
+        init : function() {
+            const _this = this;
+
+
+            // 댓글 수정
+            document.querySelectorAll('#btn-comment-update').forEach(function (item) {
+                item.addEventListener('click', function () { // 버튼 클릭 이벤트 발생시
+                    const form = this.closest('form'); // btn의 가장 가까운 조상의 Element(form)를 반환 (closest)
+                    _this.commentUpdate(form); // 해당 form으로 업데이트 수행
+                });
+            });
+        },
+
+
+                /** 댓글 수정 */
+    commentUpdate : function (form) {
+        const data = {
+            id: form.querySelector('#id').value,
+            postsId: form.querySelector('#postsId').value,
+            comment: form.querySelector('#comment-content').value,
+        }
+        if (!data.comment || data.comment.trim() === "") {
+            alert("공백 또는 입력하지 않은 부분이 있습니다.");
+            return false;
+        }
+        const con_check = confirm("수정하시겠습니까?");
+        if (con_check === true) {
+            $.ajax({
+                type: 'PUT',
+                url: '/board/content/' + data.postsId + '/comments/' + data.id,
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify(data)
+            }).done(function () {
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    },
+    /** 댓글 삭제 */
+    commentDelete : function (postsId, commentId) {
+
+        const con_check = confirm("삭제하시겠습니까?");
+        if (con_check === true) {
+            $.ajax({
+                type: 'POST',
+                url: '/board/content/' + postsId + '/comments/' + commentId,
+                dataType: 'JSON',
+            }).done(function () {
+                alert('Comment was deleted!');
+                window.location.reload();
+            }).fail(function (error) {
+                alert(JSON.stringify(error));
+            });
+        }
+    }
+    };
+
+    main.init();
+</script>

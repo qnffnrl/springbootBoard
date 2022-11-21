@@ -351,6 +351,19 @@ public class MainController {
         return ResponseEntity.ok(commentService.commentSave(userSessionDto.getNickname(), number, dto));
     }
 
+    @PutMapping("/board/content/{number}/comments/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody CommentRequestDto dto){
+        commentService.update(id, dto);
+        return ResponseEntity.ok(id);
+    }
+
+    @PostMapping(value = "/board/content/{number}/comments/{id}")
+    public String deleteComment(@PathVariable Long id){
+        commentService.delete(id);
+        return "redirect:/board/content/{number}";
+    }
+
+
 //********************** << 댓글 **************************
 
 

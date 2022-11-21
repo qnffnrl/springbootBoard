@@ -40,6 +40,10 @@ public class Comment {
     @JoinColumn(name = "user_id")
     private User user;
 
+    public void update(String comment){
+        this.comment = comment;
+    }
+
 }
 
 
