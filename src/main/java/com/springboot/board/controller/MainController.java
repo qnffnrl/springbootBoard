@@ -169,7 +169,6 @@ public class MainController {
 
         /* 댓글 */
         List<Comment> comments = dto.getComments();
-        System.out.println("=====================================" + comments);
 
         if (comments != null && !comments.isEmpty()) {
             model.addAttribute("comments", comments);
