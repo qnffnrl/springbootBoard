@@ -12,11 +12,15 @@
                 <form>
                     <input type="hidden" id="id" value="{{id}}">
                     <input type="hidden" id="postsId" value="{{board.number}}">
+                    <input type="hidden" id="writerUserId" value="{{user.id}}">
+                    <input type="hidden" id="sessionUserId" value="{{#user}}{{userId}}{{/user}}">
                     <div class="form-group">
                         <textarea class="form-control" id="comment-content" rows="3">{{comment}}</textarea>
                     </div>
-                    <input type="button" id="btn-comment-update" value="수정" class="bi bi-pencil-square" style="color: black">
-                    <button onclick="main.commentDelete({{board.number}}, {{id}})" class="badge bi bi-trash" style="color: black">삭제</button>
+                    {{#isWriter}}
+                        <input type="button" id="btn-comment-update" value="수정" class="bi bi-pencil-square" style="color: black">
+                        <button onclick="main.commentDelete({{board.number}}, {{id}}, {{user.id}}, {{userId}})" class="badge bi bi-trash" style="color: black">삭제</button>
+                    {{/isWriter}}
                 </form>
 
             </li>
@@ -45,6 +49,12 @@
             id: form.querySelector('#id').value,
             postsId: form.querySelector('#postsId').value,
             comment: form.querySelector('#comment-content').value,
+            writerUserId :form.querySelector('#writerUSerId').value,
+            sessionUserId : form.querySelector('#sessionUserId').value
+        }
+        if(data.writerUserId !== data.sessionUserId){
+            alert("본인이 작성한 댓글만 수정 가능합니다.");
+            return false;
         }
         if (!data.comment || data.comment.trim() === "") {
             alert("공백 또는 입력하지 않은 부분이 있습니다.");
@@ -66,22 +76,25 @@
         }
     },
     /** 댓글 삭제 */
-    commentDelete : function (postsId, commentId) {
-
-        const con_check = confirm("삭제하시겠습니까?");
-        if (con_check === true) {
-            $.ajax({
-                type: 'POST',
-                url: '/board/content/' + postsId + '/comments/' + commentId,
-                dataType: 'JSON',
-            }).done(function () {
-                alert('Comment was deleted!');
-                window.location.reload();
-            }).fail(function (error) {
-                alert(JSON.stringify(error));
-            });
+        commentDelete : function (postsId, commentId, commentWriterId, sessionUserId) {
+            if(commentWriterId !== sessionUserId){
+                alert("본인이 작성한 댓글만 삭제 가능합니다.")
+            }else{
+                const con_check = confirm("삭제하시겠습니까?");
+                if (con_check === true) {
+                    $.ajax({
+                        type: 'POST',
+                        url: '/board/content/' + postsId + '/comments/' + commentId,
+                        dataType: 'JSON',
+                    }).done(function () {
+                        alert('Comment was deleted!');
+                        window.location.reload();
+                    }).fail(function (error) {
+                        alert(JSON.stringify(error));
+                    });
+                }
+            }
         }
-    }
     };
 
     main.init();

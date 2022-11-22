@@ -180,6 +180,13 @@ public class MainController {
 
         if (user != null) {
             model.addAttribute("user", user.getNickname());
+            model.addAttribute("userId", user.getId());
+
+
+            for(int i = 0; i < comments.size(); i++){
+                boolean isWriter = comments.get(i).getUser().getId().equals(user.getId());
+                model.addAttribute("isWriter", isWriter);
+            }
         }
 
         return "/board/contentView";
