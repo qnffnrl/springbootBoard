@@ -14,8 +14,10 @@
 
     <div id="contentView-btns">
         <div id="contentView-btns-child">
-            <button class="btn btn-outline-dark w-50" onclick="location.href='/board/updateForm/{{number}}'">수정</button>
-            <button class="btn btn-outline-dark w-50" id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
+            {{#isBoardWriter}}
+                <button class="btn btn-outline-dark w-50" onclick="location.href='/board/updateForm/{{number}}'">수정</button>
+                <button class="btn btn-outline-dark w-50" id="deleteBtn" onclick="location.href='/board/delete/{{number}}'">글 삭제</button><br><br>
+            {{/isBoardWriter}}
             <button class="btn btn-outline-dark w-50" onclick="location.href='/board/main'">돌아가기</button>
         </div>
     </div>

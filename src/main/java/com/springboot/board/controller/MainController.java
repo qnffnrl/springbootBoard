@@ -182,10 +182,13 @@ public class MainController {
             model.addAttribute("user", user.getNickname());
             model.addAttribute("userId", user.getId());
 
+            boolean isBoardWriter = user.getNickname().equals(dto.getWriter());
+            model.addAttribute("isBoardWriter", isBoardWriter);
+
 
             for(int i = 0; i < comments.size(); i++){
-                boolean isWriter = comments.get(i).getUser().getId().equals(user.getId());
-                model.addAttribute("isWriter", isWriter);
+                boolean isReplyWriter = comments.get(i).getUser().getId().equals(user.getId());
+                model.addAttribute("isReplyWriter", isReplyWriter);
             }
         }
 

@@ -17,10 +17,10 @@
                     <div class="form-group">
                         <textarea class="form-control" id="comment-content" rows="3">{{comment}}</textarea>
                     </div>
-                    {{#isWriter}}
+                    {{#isReplyWriter}}
                         <input type="button" id="btn-comment-update" value="수정" class="bi bi-pencil-square" style="color: black">
                         <button onclick="main.commentDelete({{board.number}}, {{id}}, {{user.id}}, {{userId}})" class="badge bi bi-trash" style="color: black">삭제</button>
-                    {{/isWriter}}
+                    {{/isReplyWriter}}
                 </form>
 
             </li>
