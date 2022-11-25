@@ -32,6 +32,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -79,13 +81,15 @@ public class MainController {
      * 전체 게시글 출력
      * 페이징
      * @PageAbleDefault(size = 10(디폴트), sort = 정렬 기준 필드(변수), direction = ASC/DESC, Pageable pageable = PageableDefault 값을 갖고 있는 변수 선언)
+     * @RequestParam : Get Method 에서 키 값의 value 가져올 때 사용
      */
-    @GetMapping("board/main")
+    @GetMapping("/board/main")
     public String getMain(@RequestParam(value = "error", required = false) String error,
                           @RequestParam(value = "exception", required = false) String exception,
                           Model model,
                           @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable){
         Page<Board> boards = boardService.findBoards(pageable);
+
 
 //      게시글 뿌려주기
         model.addAttribute("boards", boards);
@@ -134,7 +138,7 @@ public class MainController {
      *  글 작성 insert (DB 적용)
      */
     @PostMapping("/board/new")
-    public String create(BoardDto boardDto, Model model){
+    public String create(BoardDto boardDto, Model model, HttpServletResponse response) throws IOException {
 
         UserSessionDto user = (UserSessionDto) session.getAttribute("user");
         if (user != null) {
@@ -142,6 +146,13 @@ public class MainController {
         }
 
         Board board = new Board();
+        if("".equals(boardDto.getTitle())){
+            response.setContentType("text/html; charset=UTF-8");
+            PrintWriter out = response.getWriter();
+            out.println("<script>alert('로그인 정보를 확인해주세요.'); history.go(-1);</script>");
+            out.flush();
+        }
+
         board.setTitle(boardDto.getTitle());
         board.setContent(boardDto.getContent());
         board.setUpdateAt(LocalDate.now());
@@ -149,8 +160,7 @@ public class MainController {
 
         boardService.boardRegistration(board);
 
-        return "redirect:/board/main";
-
+        return "redirect:main";
     }
 
     /**
@@ -192,7 +202,7 @@ public class MainController {
             }
         }
 
-        return "/board/contentView";
+        return "board/contentView";
 
     }
 
@@ -209,7 +219,7 @@ public class MainController {
             model.addAttribute("user", user.getNickname());
         }
 
-        return "/board/updateForm";
+        return "board/updateForm";
     }
 
     @PostMapping("/board/update/{number}")
@@ -228,7 +238,7 @@ public class MainController {
             model.addAttribute("user", user.getNickname());
         }
 
-        return "redirect:/board/content/" + number;
+        return "redirect:../../board/content/" + number;
 
     }
 
@@ -245,7 +255,7 @@ public class MainController {
             model.addAttribute("user", user.getNickname());
         }
 
-        return "redirect:/board/main";
+        return "redirect:../main";
     }
 
     /**
@@ -253,6 +263,7 @@ public class MainController {
      */
     @GetMapping("/board/search")
     public String search(String keyword, Model model, @PageableDefault(size = 10, sort = "number", direction = Sort.Direction.DESC) Pageable pageable) {
+
         Page<Board> searchedList = boardService.search(keyword, pageable);
 
         model.addAttribute("searchedList", searchedList);
@@ -268,9 +279,12 @@ public class MainController {
             model.addAttribute("user", user.getNickname());
         }
 
-        return "/board/search";
+        return "board/search";
 
     }
+
+
+
 
 //**********************회원 관련 정보**************************
 
@@ -279,7 +293,7 @@ public class MainController {
      */
     @GetMapping("/auth/join")
     public String join(){
-        return "/user/user-join";
+        return "user/user-join";
     }
 
     @PostMapping("/auth/joinProc")
@@ -295,10 +309,10 @@ public class MainController {
                 model.addAttribute(key, validatorResult.get(key));
             }
 
-            return "/user/user-join";
+            return "user/user-join";
         }
         userService.join(userDto);
-        return "redirect:/board/main";
+        return "redirect:main";
     }
 
     /**
@@ -314,7 +328,7 @@ public class MainController {
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
-        return "redirect:/board/main";
+        return "redirect:main";
     }
 
     /**
@@ -331,7 +345,7 @@ public class MainController {
         if (user != null) {
             model.addAttribute("user", user.getNickname());
         }
-        return "/user/user-modify";
+        return "user/user-modify";
     }
 
     /**
@@ -353,6 +367,9 @@ public class MainController {
 //********************** << 회원 관련 정보**************************
 
 
+
+
+
 //********************** 댓글 **************************
 
     @PostMapping("/board/content/{number}/comments")
@@ -370,7 +387,7 @@ public class MainController {
     @PostMapping(value = "/board/content/{number}/comments/{id}")
     public String deleteComment(@PathVariable Long id){
         commentService.delete(id);
-        return "redirect:/board/content/{number}";
+        return "redirect:content/{number}";
     }
 
 
@@ -378,11 +395,4 @@ public class MainController {
 
 
 }
-
-
-
-
-
-
-
 

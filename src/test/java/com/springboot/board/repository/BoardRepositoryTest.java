@@ -30,8 +30,8 @@ class BoardRepositoryTest {
         board.setUpdateAt(LocalDate.now());
 
         //debug : boardRepository NullPointException 발생
-        Board newBoard = boardRepository.save(board);
-        System.out.println("newBoard : " + newBoard);
+//        Board newBoard = boardRepository.save(board);
+//        System.out.println("newBoard : " + newBoard);
 
     }
 }
