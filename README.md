@@ -131,4 +131,4 @@ Springboot를 활용 게시판 제작
 
 ### (jar 서버 배포 중)
 * google의 HTTPS 정책 때문에 일단 oAuth는 일단 주석 함
-* 현재 서버 배포를 jenkins로 자동화를 했는데 문제가 로그인 시에 세션에 사용자명이 jenkins로 뜬다 -> 해결 
+* 현재 서버 배포를 jenkins로 자동화를 했는데 문제가 로그인 시에 세션에 사용자명이 jenkins로 뜬다 -> 해결 중
