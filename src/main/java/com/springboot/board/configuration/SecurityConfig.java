@@ -83,7 +83,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                  * HttpServletRequest 에 따라 접근을 제한함
                  */
                 .authorizeRequests()
-                .antMatchers("/auth/**", "/board/main", "/board/content/**", "/board/search", "/oauth2/**")//해당 경로에 대해 인증없이 접근가능
+                .antMatchers("/auth/**", "/board/main", "/board/content/**", "/board/search", "/oauth2/**", "/chat/**", "/websocket/**")//해당 경로에 대해 인증없이 접근가능
                 .permitAll() // 권한에 다른 접근을 설정함
                 .anyRequest().authenticated() //그 외의 경로는 인증이 필요함
 
@@ -111,14 +111,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true).deleteCookies("user") // HTTP 세션을 초기화
                     .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지
 
-                .and();
+                .and()
 
                 /**
                  * oAuth
                  */
-//                .oauth2Login()
-//                    .defaultSuccessUrl("/board/main")
-//                    .userInfoEndpoint()
-//                    .userService(customOAuth2UserService);
+                .oauth2Login()
+                    .defaultSuccessUrl("/board/main")
+                    .userInfoEndpoint()
+                    .userService(customOAuth2UserService);
     }
 }
