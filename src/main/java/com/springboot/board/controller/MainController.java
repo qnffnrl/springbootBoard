@@ -107,6 +107,7 @@ public class MainController {
         model.addAttribute("exception", exception);
 
 
+
 //      페이징 버튼 정보
         model.addAttribute("previous", pageable.previousOrFirst().getPageNumber());
         model.addAttribute("next", pageable.next().getPageNumber());
