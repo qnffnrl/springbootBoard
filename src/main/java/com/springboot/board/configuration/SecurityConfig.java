@@ -111,14 +111,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .invalidateHttpSession(true).deleteCookies("user") // HTTP 세션을 초기화
                     .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지
 
-                .and()
+//                .and()
 
                 /**
                  * oAuth
                  */
-                .oauth2Login()
-                    .defaultSuccessUrl("/board/main")
-                    .userInfoEndpoint()
-                    .userService(customOAuth2UserService);
+//                .oauth2Login()
+//                    .defaultSuccessUrl("/board/main")
+//                    .userInfoEndpoint()
+//                    .userService(customOAuth2UserService);
     }
 }
