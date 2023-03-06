@@ -120,7 +120,7 @@ public class MainController {
                 model.addAttribute("user", user.getNickname());
             }
         }
-        return "board/main";
+        return "/board/main";
     }
 
     /**
