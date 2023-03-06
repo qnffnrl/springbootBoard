@@ -109,7 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logout()
                     .logoutRequestMatcher(new AntPathRequestMatcher("/auth/logout")) // Spring Security 에서 해당 주소로 오는 요청을 낚아채 로직 수행
                     .invalidateHttpSession(true).deleteCookies("user") // HTTP 세션을 초기화
-                    .logoutSuccessUrl("/board/main") // 로그아웃 시 이동되는 페이지
+                    .logoutSuccessUrl("/board/main"); // 로그아웃 시 이동되는 페이지
 
 //                .and()
 
