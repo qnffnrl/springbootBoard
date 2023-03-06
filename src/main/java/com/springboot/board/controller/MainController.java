@@ -83,7 +83,7 @@ public class MainController {
      * @PageAbleDefault(size = 10(디폴트), sort = 정렬 기준 필드(변수), direction = ASC/DESC, Pageable pageable = PageableDefault 값을 갖고 있는 변수 선언)
      * @RequestParam : Get Method 에서 키 값의 value 가져올 때 사용
      */
-    @GetMapping("/board/main")
+    @GetMapping("board/main")
     public String getMain(@RequestParam(value = "error", required = false) String error,
                           @RequestParam(value = "exception", required = false) String exception,
                           Model model,
