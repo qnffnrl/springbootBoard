@@ -1,5 +1,5 @@
 # springbootBoard
-Springboot를 활용 게시판 제작
+Springboot를 활용 게시판 제작.
 
 ## Build/Deploy to -> http://www.risker.shop:8080/board/main
 * CentOS 7
